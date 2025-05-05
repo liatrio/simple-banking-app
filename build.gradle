@@ -1,0 +1,46 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = "21.0.2"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+run {
+    // Set this to true to see JavaFX output in the console
+    systemProperty "java.util.logging.SimpleFormatter.format", "%1\$tF %1\$tT %4\$s %2\$s %5\$s%6\$s%n"
+}
+
+application {
+    mainClass = 'com.smartbank.SmartBankApp'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['src']
+        }
+    }
+}
+
+dependencies {
+    // Add any additional dependencies here
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+run {
+    // Set this to true to see JavaFX output in the console
+    systemProperty "java.util.logging.SimpleFormatter.format", "%1\$tF %1\$tT %4\$s %2\$s %5\$s%6\$s%n"
+}
