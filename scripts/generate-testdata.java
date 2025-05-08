@@ -6,6 +6,9 @@ import com.smartbank.service.category.*;
 import com.smartbank.service.transfer.*;
 import com.smartbank.util.JPAUtil;
 import com.smartbank.auth.AuthenticationServiceImpl;
+import com.smartbank.model.CreditHistory.EventType;
+import com.smartbank.model.CreditLimitChangeRequest.Status;
+import com.smartbank.model.CreditLimitChangeRequest.Source;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -75,6 +78,8 @@ public class DataGenerator {
     private static final AccountRepository accountRepository = RepositoryFactory.getAccountRepository();
     private static final TransactionRepository transactionRepository = RepositoryFactory.getTransactionRepository();
     private static final TransactionCategoryRepository categoryRepository = RepositoryFactory.getTransactionCategoryRepository();
+    private static final CreditHistoryRepository creditHistoryRepository = RepositoryFactory.getCreditHistoryRepository();
+    private static final CreditLimitChangeRequestRepository creditLimitRequestRepository = RepositoryFactory.getCreditLimitChangeRequestRepository();
     private static final Random random = new Random();
     
     public static void main(String[] args) {
@@ -203,11 +208,35 @@ public class DataGenerator {
         double creditLimit = getRandomDouble(MIN_CREDIT_LIMIT, MAX_CREDIT_LIMIT);
         
         CreditAccount account = new CreditAccount(user, initialBalance, creditLimit);
+        
+        // Set additional credit-related fields to avoid null values in primitives
+        account.setAutomaticCreditLimitReviewEnabled(random.nextBoolean());
+        account.setCreditScore(random.nextInt(300) + 550); // Random score between 550-850
+        int onTimePayments = random.nextInt(20);
+        int latePayments = random.nextInt(3);  // Keep late payments low
+        
+        for (int i = 0; i < onTimePayments; i++) {
+            account.incrementOnTimePayments();
+        }
+        
+        for (int i = 0; i < latePayments; i++) {
+            account.incrementLatePayments();
+        }
+        
+        account.updateAverageMonthlyBalance(initialBalance);
+        
+        // Save the account to get the account number
         accountRepository.save(account);
+        
+        // Create credit history entries
+        createCreditHistoryEntries(account);
+        
+        // Create some credit limit change requests
+        createCreditLimitChangeRequests(account, user.getUsername());
         
         System.out.println("Created credit account for user " + user.getUsername() + 
                            " with balance " + initialBalance + " and credit limit " + 
-                           creditLimit);
+                           creditLimit + ", credit score: " + account.getCreditScore());
     }
     
     private static void createTransactionsForAccounts() {
@@ -264,6 +293,155 @@ public class DataGenerator {
                            " for account " + account.getAccountNumber());
     }
     
+    /**
+     * Create credit history entries for a credit account
+     */
+    private static void createCreditHistoryEntries(CreditAccount account) {
+        System.out.println("Creating credit history entries for account " + account.getAccountNumber());
+        
+        // Create initial credit score update entry
+        CreditHistory initialScoreEntry = new CreditHistory(
+            account, 
+            EventType.CREDIT_SCORE_UPDATE, 
+            "Initial credit score assessment",
+            700,  // Default initial score
+            account.getCreditScore()
+        );
+        account.addCreditHistoryEntry(initialScoreEntry);
+        creditHistoryRepository.save(initialScoreEntry);
+        
+        // Create on-time payment entries
+        for (int i = 0; i < account.getNumberOfOnTimePayments(); i++) {
+            double amount = getRandomDouble(50, 200);
+            CreditHistory paymentEntry = new CreditHistory(
+                account,
+                EventType.PAYMENT_ON_TIME,
+                "On-time payment of $" + amount
+            );
+            paymentEntry.setOldValue(amount);
+            paymentEntry.setNewValue(0);
+            account.addCreditHistoryEntry(paymentEntry);
+            creditHistoryRepository.save(paymentEntry);
+        }
+        
+        // Create late payment entries if any
+        for (int i = 0; i < account.getNumberOfLatePayments(); i++) {
+            double amount = getRandomDouble(50, 200);
+            CreditHistory latePaymentEntry = new CreditHistory(
+                account,
+                EventType.PAYMENT_LATE,
+                "Late payment of $" + amount
+            );
+            latePaymentEntry.setOldValue(amount);
+            latePaymentEntry.setNewValue(0);
+            account.addCreditHistoryEntry(latePaymentEntry);
+            creditHistoryRepository.save(latePaymentEntry);
+        }
+        
+        // Add credit limit change event if applicable
+        if (account.getNumberOfCreditLimitIncreases() > 0) {
+            double oldLimit = account.getInitialCreditLimit();
+            double newLimit = account.getCreditLimit();
+            CreditHistory limitIncreaseEntry = new CreditHistory(
+                account,
+                EventType.CREDIT_LIMIT_INCREASE,
+                "Credit limit increase based on account performance",
+                oldLimit,
+                newLimit
+            );
+            account.addCreditHistoryEntry(limitIncreaseEntry);
+            creditHistoryRepository.save(limitIncreaseEntry);
+        }
+        
+        // Add automatic review entry
+        if (account.isAutomaticCreditLimitReviewEnabled()) {
+            CreditHistory reviewEntry = new CreditHistory(
+                account,
+                EventType.AUTOMATIC_REVIEW,
+                "Scheduled automatic review of account performance"
+            );
+            reviewEntry.setOldCreditScore(account.getCreditScore() - random.nextInt(20));
+            reviewEntry.setNewCreditScore(account.getCreditScore());
+            account.addCreditHistoryEntry(reviewEntry);
+            creditHistoryRepository.save(reviewEntry);
+        }
+        
+        // Update the account with the history entries
+        accountRepository.save(account);
+    }
+    
+    /**
+     * Create credit limit change requests for an account
+     */
+    private static void createCreditLimitChangeRequests(CreditAccount account, String username) {
+        System.out.println("Creating credit limit change requests for account " + account.getAccountNumber());
+        
+        // Determine number of requests (0-3)
+        int numRequests = random.nextInt(4);
+        
+        for (int i = 0; i < numRequests; i++) {
+            // Determine request type (increase or decrease)
+            boolean isIncrease = random.nextDouble() < 0.8;  // 80% chance of increase
+            
+            double currentLimit = account.getCreditLimit();
+            double requestedLimit;
+            
+            if (isIncrease) {
+                // Request 10-30% increase
+                double increasePercent = 0.1 + (random.nextDouble() * 0.2);
+                requestedLimit = currentLimit * (1 + increasePercent);
+            } else {
+                // Request 5-15% decrease
+                double decreasePercent = 0.05 + (random.nextDouble() * 0.1);
+                requestedLimit = currentLimit * (1 - decreasePercent);
+            }
+            
+            // Round to nearest $100
+            requestedLimit = Math.round(requestedLimit / 100.0) * 100.0;
+            
+            // Determine source
+            Source source;
+            double rand = random.nextDouble();
+            if (rand < 0.6) {
+                source = Source.USER_REQUESTED;
+            } else if (rand < 0.9) {
+                source = Source.SYSTEM_AUTOMATIC;
+            } else {
+                source = Source.ADMIN_INITIATED;
+            }
+            
+            // Create the request
+            String reason = isIncrease 
+                ? "Request for credit limit increase based on payment history"
+                : "Request to reduce credit limit to manage spending";
+                
+            CreditLimitChangeRequest request = new CreditLimitChangeRequest(
+                account.getAccountNumber(),
+                currentLimit,
+                requestedLimit,
+                username,
+                source,
+                reason,
+                account.getCreditScore(),
+                source == Source.SYSTEM_AUTOMATIC
+            );
+            
+            // Determine status
+            double statusRand = random.nextDouble();
+            if (statusRand < 0.2) {
+                // Leave as PENDING
+            } else if (statusRand < 0.7) {
+                // Approve
+                request.approve("admin", "Approved based on account history and credit score");
+            } else {
+                // Reject
+                request.reject("admin", "Rejected due to recent account activity");
+            }
+            
+            creditLimitRequestRepository.save(request);
+        }
+    }
+
     // Utility methods
     
     private static <T> T getRandomElement(T[] array) {

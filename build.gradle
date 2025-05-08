@@ -9,8 +9,8 @@ repositories {
 }
 
 javafx {
-    version = "21.0.2"
-    modules = ['javafx.controls', 'javafx.fxml']
+    version = "17.0.8"  // Using a more stable version
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing']
 }
 
 application {
@@ -55,6 +55,21 @@ dependencies {
     // SLF4J implementation
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'org.slf4j:slf4j-simple:1.7.36'
+    
+    // PDF Generation
+    implementation 'org.apache.pdfbox:pdfbox:2.0.28'
+    implementation 'org.apache.pdfbox:fontbox:2.0.28'
+    
+    // JavaMail for email delivery
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+    
+    // Chart export libraries
+    implementation 'org.apache.xmlgraphics:batik-svggen:1.16'
+    implementation 'org.apache.xmlgraphics:batik-dom:1.16'
+    implementation 'org.apache.xmlgraphics:batik-util:1.16'
+    
+    // FXSVGChart for SVG export
+    implementation 'org.gillius:jfxutils:1.0'
 }
 
 sourceCompatibility = 11
