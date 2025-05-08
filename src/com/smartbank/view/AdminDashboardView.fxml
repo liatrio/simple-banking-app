@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.smartbank.controller.AdminDashboardController" 
+      spacing="15" styleClass="content-panel">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <Label text="Administrator Dashboard" styleClass="page-title"/>
+    
+    <TabPane VBox.vgrow="ALWAYS">
+        <Tab text="System Overview" closable="false">
+            <VBox spacing="15">
+                <HBox spacing="15">
+                    <!-- System Status Card -->
+                    <VBox styleClass="dashboard-card" HBox.hgrow="ALWAYS">
+                        <Label text="System Status" styleClass="card-title"/>
+                        <Label fx:id="lblSystemStatus" text="All systems operational"/>
+                        <Label fx:id="lblLastUpdate" text="Last updated: N/A"/>
+                    </VBox>
+                    
+                    <!-- Active Users Card -->
+                    <VBox styleClass="dashboard-card" HBox.hgrow="ALWAYS">
+                        <Label text="Active Users" styleClass="card-title"/>
+                        <Label fx:id="lblActiveUserCount" text="0"/>
+                        <Button text="View Active Sessions" onAction="#handleViewActiveSessions"/>
+                    </VBox>
+                    
+                    <!-- System Resources Card -->
+                    <VBox styleClass="dashboard-card" HBox.hgrow="ALWAYS">
+                        <Label text="System Resources" styleClass="card-title"/>
+                        <ProgressBar fx:id="progressDbStorage" progress="0.0" maxWidth="Infinity"/>
+                        <Label text="Database Storage" styleClass="resource-label"/>
+                        <ProgressBar fx:id="progressMemory" progress="0.0" maxWidth="Infinity"/>
+                        <Label text="Memory Utilization" styleClass="resource-label"/>
+                    </VBox>
+                </HBox>
+                
+                <!-- User Statistics Chart -->
+                <HBox styleClass="dashboard-card" VBox.vgrow="ALWAYS">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="User Statistics" styleClass="card-title"/>
+                        <PieChart fx:id="chartUserRoles" title="Users by Role" 
+                                 legendVisible="true" labelsVisible="true"/>
+                    </VBox>
+                </HBox>
+                
+                <!-- Recent Activity Table -->
+                <VBox styleClass="dashboard-card" VBox.vgrow="ALWAYS">
+                    <Label text="Recent System Activity" styleClass="card-title"/>
+                    <TableView fx:id="tblActivity" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colTimestamp" text="Timestamp" prefWidth="150"/>
+                            <TableColumn fx:id="colUser" text="User" prefWidth="100"/>
+                            <TableColumn fx:id="colAction" text="Action" prefWidth="120"/>
+                            <TableColumn fx:id="colDetails" text="Details" prefWidth="300"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </Tab>
+        
+        <Tab text="User Management" closable="false">
+            <VBox spacing="10">
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button text="Create New User" onAction="#handleCreateUser" styleClass="btn-primary"/>
+                    <Button text="Manage Users" onAction="#handleManageUsers"/>
+                </HBox>
+                
+                <!-- User Statistics -->
+                <TitledPane text="User Statistics" expanded="true">
+                    <GridPane hgap="20" vgap="10">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        
+                        <Label text="Total Users:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblTotalUsers" text="0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Admin Users:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                        <Label fx:id="lblAdminUsers" text="0" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                        
+                        <Label text="Customer Users:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblCustomerUsers" text="0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        
+                        <Label text="New Users (Last 30 Days):" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                        <Label fx:id="lblNewUsers" text="0" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                        
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="200"/>
+                            <ColumnConstraints prefWidth="100"/>
+                            <ColumnConstraints prefWidth="200"/>
+                            <ColumnConstraints prefWidth="100"/>
+                        </columnConstraints>
+                    </GridPane>
+                </TitledPane>
+                
+                <!-- Recent Account Activity -->
+                <TitledPane text="Recent User Activity" expanded="true" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tblUserActivity" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colUserActivityUsername" text="Username" prefWidth="100"/>
+                            <TableColumn fx:id="colUserActivityAction" text="Action" prefWidth="120"/>
+                            <TableColumn fx:id="colUserActivityTimestamp" text="Timestamp" prefWidth="150"/>
+                            <TableColumn fx:id="colUserActivityIp" text="IP Address" prefWidth="120"/>
+                            <TableColumn fx:id="colUserActivityStatus" text="Status" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </TitledPane>
+            </VBox>
+        </Tab>
+        
+        <Tab text="System Settings" closable="false">
+            <ScrollPane fitToWidth="true">
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    
+                    <!-- Security Settings -->
+                    <TitledPane text="Security Settings" expanded="true">
+                        <GridPane hgap="15" vgap="10">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            
+                            <Label text="Session Timeout (minutes):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtSessionTimeout" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Maximum Login Attempts:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtMaxLoginAttempts" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Lockout Duration (minutes):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtLockoutDuration" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Password Expiry (days):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtPasswordExpiry" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                            
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="250"/>
+                                <ColumnConstraints prefWidth="150"/>
+                            </columnConstraints>
+                        </GridPane>
+                    </TitledPane>
+                    
+                    <!-- Email Settings -->
+                    <TitledPane text="Email Settings" expanded="false">
+                        <GridPane hgap="15" vgap="10">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            
+                            <Label text="SMTP Server:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtSmtpServer" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            
+                            <Label text="SMTP Port:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtSmtpPort" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            
+                            <Label text="SMTP Username:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtSmtpUsername" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            
+                            <Label text="SMTP Password:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <PasswordField fx:id="txtSmtpPassword" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Sender Email:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtSenderEmail" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                            
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="250"/>
+                                <ColumnConstraints prefWidth="250"/>
+                            </columnConstraints>
+                        </GridPane>
+                    </TitledPane>
+                    
+                    <!-- Backup Settings -->
+                    <TitledPane text="Backup Settings" expanded="false">
+                        <GridPane hgap="15" vgap="10">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            
+                            <Label text="Backup Directory:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <HBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                                <TextField fx:id="txtBackupDirectory" HBox.hgrow="ALWAYS"/>
+                                <Button text="Browse" onAction="#handleBrowseBackupDirectory"/>
+                            </HBox>
+                            
+                            <Label text="Backup Frequency:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="cmbBackupFrequency" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity"/>
+                            
+                            <Label text="Retention Period (days):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtRetentionPeriod" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="250"/>
+                                <ColumnConstraints prefWidth="250"/>
+                            </columnConstraints>
+                        </GridPane>
+                    </TitledPane>
+                    
+                    <!-- Action Buttons -->
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="Reset to Defaults" onAction="#handleResetDefaults"/>
+                        <Button text="Save Settings" onAction="#handleSaveSettings" styleClass="btn-primary"/>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+    </TabPane>
+    
+</VBox>

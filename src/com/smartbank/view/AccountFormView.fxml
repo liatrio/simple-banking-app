@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.smartbank.controller.AccountFormController" spacing="10" alignment="TOP_CENTER">
+    <Label text="Create Account" styleClass="heading" />
+    <GridPane hgap="8" vgap="8">
+        <Label text="Account Holder:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="txtHolder" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <Label text="Account Type:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <ChoiceBox fx:id="choiceType" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        <Label text="Initial Balance:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="txtBalance" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        <Label text="Interest Rate (Savings):" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <TextField fx:id="txtInterest" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        <Label text="Credit Limit (Credit):" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <TextField fx:id="txtCreditLimit" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+    </GridPane>
+    <Button text="Create Account" onAction="#handleCreateAccount" />
+</VBox>

@@ -1,84 +1,67 @@
 package com.smartbank.model;
 
+import javax.persistence.*;
+import java.util.Objects;
+
 /**
- * Credit account with credit limit
+ * CreditAccount extends Account and adds credit limit and custom withdrawal logic.
  */
-public class CreditAccount extends BankAccount {
-    private static final double DEFAULT_CREDIT_LIMIT = 1000.0;
-    private final double creditLimit;
-    
-    /**
-     * Constructor for creating a new credit account with default credit limit
-     * 
-     * @param holderName The name of the account holder
-     * @param initialDeposit The initial deposit amount
-     */
-    public CreditAccount(String holderName, double initialDeposit) {
-        this(holderName, initialDeposit, DEFAULT_CREDIT_LIMIT);
+@Entity
+@DiscriminatorValue("Credit")
+public class CreditAccount extends Account {
+    @Column(name = "creditLimit")
+    private double creditLimit;
+
+    // Default constructor required by JPA
+    protected CreditAccount() {
+        super();
     }
-    
-    /**
-     * Constructor for creating a new credit account with custom credit limit
-     * 
-     * @param holderName The name of the account holder
-     * @param initialDeposit The initial deposit amount
-     * @param creditLimit The credit limit
-     */
-    public CreditAccount(String holderName, double initialDeposit, double creditLimit) {
-        super(holderName, initialDeposit);
+
+    public CreditAccount(User accountHolder, double initialBalance, double creditLimit) {
+        super(accountHolder, initialBalance);
         this.creditLimit = creditLimit;
     }
-    
-    /**
-     * Withdraws money from the account, allowing overdraft up to the credit limit
-     * 
-     * @param amount The amount to withdraw
-     * @return true if the withdrawal was successful
-     * @throws IllegalArgumentException if the amount is negative
-     * @throws InsufficientBalanceException if the withdrawal would exceed the credit limit
-     */
-    @Override
-    public boolean withdraw(double amount) throws IllegalArgumentException, InsufficientBalanceException {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Withdrawal amount must be positive");
-        }
-        
-        if (balance - amount < -creditLimit) {
-            throw new InsufficientBalanceException("Withdrawal would exceed credit limit of $" + creditLimit);
-        }
-        
-        balance -= amount;
-        addTransaction(amount, TransactionType.WITHDRAWAL);
-        return true;
-    }
-    
-    /**
-     * Gets the credit limit
-     * 
-     * @return The credit limit
-     */
+
     public double getCreditLimit() {
         return creditLimit;
     }
-    
-    /**
-     * Gets the available credit
-     * 
-     * @return The available credit
-     */
-    public double getAvailableCredit() {
-        return creditLimit + balance;
+
+    public void setCreditLimit(double creditLimit) {
+        this.creditLimit = creditLimit;
     }
-    
-    /**
-     * Displays the account details including the credit limit
-     * 
-     * @return A string containing the account details
-     */
+
     @Override
-    public String displayAccountDetails() {
-        return super.displayAccountDetails() + 
-               String.format("\nCredit Limit: $%.2f\nAvailable Credit: $%.2f", 
-                            creditLimit, getAvailableCredit());
+    public void withdraw(double amount) throws Exception {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+        }
+        if (amount > balance + creditLimit) {
+            throw new Exception("Withdrawal exceeds credit limit.");
+        }
+        balance -= amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CreditAccount that = (CreditAccount) o;
+        return Double.compare(that.creditLimit, creditLimit) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), creditLimit);
+    }
+
+    @Override
+    public String toString() {
+        return "CreditAccount{" +
+                "accountNumber=" + getAccountNumber() +
+                ", accountHolder=" + getAccountHolder().getUsername() +
+                ", balance=" + getBalance() +
+                ", creditLimit=" + creditLimit +
+                '}';
     }
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.smartbank.controller.UserProfileController" 
+      spacing="15" styleClass="content-panel">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <Label text="User Profile" styleClass="page-title"/>
+    
+    <GridPane hgap="15" vgap="10">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        
+        <!-- Username Row -->
+        <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
+               styleClass="form-label"/>
+        <Label fx:id="lblUsername" GridPane.rowIndex="0" GridPane.columnIndex="1" 
+               styleClass="profile-value"/>
+        
+        <!-- Role Row -->
+        <Label text="Role:" GridPane.rowIndex="1" GridPane.columnIndex="0" 
+               styleClass="form-label"/>
+        <Label fx:id="lblRole" GridPane.rowIndex="1" GridPane.columnIndex="1" 
+               styleClass="profile-value"/>
+        
+        <!-- First Name Row -->
+        <Label text="First Name:" GridPane.rowIndex="2" GridPane.columnIndex="0" 
+               styleClass="form-label"/>
+        <TextField fx:id="txtFirstName" GridPane.rowIndex="2" GridPane.columnIndex="1" 
+                   promptText="Enter your first name"/>
+        
+        <!-- Last Name Row -->
+        <Label text="Last Name:" GridPane.rowIndex="3" GridPane.columnIndex="0" 
+               styleClass="form-label"/>
+        <TextField fx:id="txtLastName" GridPane.rowIndex="3" GridPane.columnIndex="1" 
+                   promptText="Enter your last name"/>
+        
+        <!-- Email Row -->
+        <Label text="Email:" GridPane.rowIndex="4" GridPane.columnIndex="0" 
+               styleClass="form-label"/>
+        <TextField fx:id="txtEmail" GridPane.rowIndex="4" GridPane.columnIndex="1" 
+                   promptText="Enter your email address"/>
+        
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120" minWidth="120"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+    </GridPane>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="btnSave" text="Save Changes" onAction="#handleSave" 
+                styleClass="btn-primary"/>
+    </HBox>
+    
+    <!-- Status Message -->
+    <Label fx:id="lblStatus" styleClass="status-message"/>
+    
+</VBox>

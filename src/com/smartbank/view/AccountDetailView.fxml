@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.smartbank.controller.AccountDetailController" spacing="10" alignment="TOP_CENTER">
+    <Label text="Account Details" styleClass="heading" />
+    <GridPane hgap="8" vgap="8">
+        <Label text="Account Number:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <Label fx:id="lblAccountNumber" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <Label text="Holder:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <Label fx:id="lblHolder" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        <Label text="Type:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <Label fx:id="lblType" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        <Label text="Balance:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <Label fx:id="lblBalance" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+    </GridPane>
+    <Button text="View Transaction History" onAction="#showTransactionHistory" />
+</VBox>

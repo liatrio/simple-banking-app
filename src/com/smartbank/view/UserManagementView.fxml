@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.smartbank.controller.UserManagementController" 
+      spacing="10" styleClass="content-panel">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <Label text="User Management" styleClass="page-title"/>
+    
+    <HBox spacing="10">
+        <TextField fx:id="txtSearch" promptText="Search users..." HBox.hgrow="ALWAYS"/>
+        <Button text="Search" onAction="#handleSearch"/>
+        <Button text="Reset" onAction="#handleReset"/>
+    </HBox>
+    
+    <TableView fx:id="tblUsers" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colUserId" text="ID" prefWidth="70"/>
+            <TableColumn fx:id="colUsername" text="Username" prefWidth="150"/>
+            <TableColumn fx:id="colFirstName" text="First Name" prefWidth="120"/>
+            <TableColumn fx:id="colLastName" text="Last Name" prefWidth="120"/>
+            <TableColumn fx:id="colEmail" text="Email" prefWidth="180"/>
+            <TableColumn fx:id="colRole" text="Role" prefWidth="100"/>
+            <TableColumn fx:id="colActions" text="Actions" prefWidth="120"/>
+        </columns>
+    </TableView>
+    
+    <TitledPane text="User Details" collapsible="true" expanded="true">
+        <GridPane hgap="10" vgap="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <!-- Username Field -->
+            <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtUsername" GridPane.rowIndex="0" GridPane.columnIndex="1" 
+                       GridPane.columnSpan="2" promptText="Enter username"/>
+            
+            <!-- Password Field -->
+            <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="txtPassword" GridPane.rowIndex="1" GridPane.columnIndex="1" 
+                           GridPane.columnSpan="2" promptText="Enter password"/>
+            
+            <!-- Confirm Password Field -->
+            <Label text="Confirm Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="txtConfirmPassword" GridPane.rowIndex="2" GridPane.columnIndex="1" 
+                           GridPane.columnSpan="2" promptText="Confirm password"/>
+            
+            <!-- First Name Field -->
+            <Label text="First Name:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtFirstName" GridPane.rowIndex="3" GridPane.columnIndex="1" 
+                       GridPane.columnSpan="2" promptText="Enter first name"/>
+            
+            <!-- Last Name Field -->
+            <Label text="Last Name:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtLastName" GridPane.rowIndex="4" GridPane.columnIndex="1" 
+                       GridPane.columnSpan="2" promptText="Enter last name"/>
+            
+            <!-- Email Field -->
+            <Label text="Email:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtEmail" GridPane.rowIndex="5" GridPane.columnIndex="1" 
+                       GridPane.columnSpan="2" promptText="Enter email"/>
+            
+            <!-- Role Field -->
+            <Label text="Role:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="cmbRole" GridPane.rowIndex="6" GridPane.columnIndex="1" 
+                      GridPane.columnSpan="2" promptText="Select role"/>
+            
+            <!-- Buttons -->
+            <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="7" 
+                  GridPane.columnIndex="0" GridPane.columnSpan="3">
+                <Button fx:id="btnCreate" text="Create" onAction="#handleCreateUser"/>
+                <Button fx:id="btnUpdate" text="Update" onAction="#handleUpdateUser" disable="true"/>
+                <Button fx:id="btnDelete" text="Delete" onAction="#handleDeleteUser" disable="true" 
+                        styleClass="delete-button"/>
+                <Button fx:id="btnClear" text="Clear" onAction="#handleClearForm"/>
+            </HBox>
+            
+            <!-- Status Message -->
+            <Label fx:id="lblStatus" GridPane.rowIndex="8" GridPane.columnIndex="0" 
+                   GridPane.columnSpan="3" styleClass="status-message"/>
+            
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" prefWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints/>
+            </columnConstraints>
+        </GridPane>
+    </TitledPane>
+</VBox>

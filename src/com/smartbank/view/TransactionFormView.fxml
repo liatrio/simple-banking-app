@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.smartbank.controller.TransactionFormController" spacing="10" alignment="TOP_CENTER">
+    <Label text="Transaction Form" styleClass="heading" />
+    <GridPane hgap="8" vgap="8">
+        <Label text="Account Number:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="txtAccountNumber" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <Label text="Amount:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="txtAmount" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        <Label text="Type:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <ChoiceBox fx:id="choiceType" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    </GridPane>
+    <Button text="Submit" fx:id="btnSubmit" />
+</VBox>

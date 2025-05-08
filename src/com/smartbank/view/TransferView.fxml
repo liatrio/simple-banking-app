@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<VBox spacing="15" alignment="TOP_CENTER" xmlns:fx="http://javafx.com/fxml" 
+      fx:controller="com.smartbank.controller.TransferController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Header -->
+    <Label text="Transfer Funds" styleClass="heading"/>
+    
+    <!-- Account Selection Section -->
+    <TitledPane text="Account Information" expanded="true">
+        <VBox spacing="10">
+            <!-- From Account -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="From Account:" minWidth="120"/>
+                <ComboBox fx:id="cmbFromAccount" prefWidth="300" />
+            </HBox>
+            
+            <!-- Account Balance -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Available Balance:" minWidth="120"/>
+                <Label fx:id="lblAvailableBalance" text="0.00"/>
+            </HBox>
+            
+            <!-- To Account -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="To Account:" minWidth="120"/>
+                <ComboBox fx:id="cmbToAccount" prefWidth="220" />
+                <Button text="..." fx:id="btnBrowseAccounts" onAction="#handleBrowseAccounts" minWidth="30"/>
+                <Button text="External" fx:id="btnExternalAccount" onAction="#handleExternalAccount" minWidth="50"/>
+            </HBox>
+            
+            <!-- External Account Number (visible only when External button is clicked) -->
+            <HBox spacing="10" alignment="CENTER_LEFT" fx:id="hboxExternalAccount" visible="false" managed="false">
+                <Label text="Account Number:" minWidth="120"/>
+                <TextField fx:id="txtExternalAccount" prefWidth="300" promptText="Enter account number"/>
+            </HBox>
+        </VBox>
+    </TitledPane>
+    
+    <!-- Transfer Details Section -->
+    <TitledPane text="Transfer Details" expanded="true">
+        <VBox spacing="10">
+            <!-- Amount -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Amount:" minWidth="120"/>
+                <TextField fx:id="txtAmount" prefWidth="150" promptText="Enter amount"/>
+            </HBox>
+            
+            <!-- Fee Display -->
+            <HBox spacing="10" alignment="CENTER_LEFT" fx:id="hboxFee">
+                <Label text="Fee:" minWidth="120"/>
+                <Label fx:id="lblFee" text="0.00"/>
+            </HBox>
+            
+            <!-- Total Amount Display -->
+            <HBox spacing="10" alignment="CENTER_LEFT" fx:id="hboxTotal">
+                <Label text="Total Amount:" minWidth="120"/>
+                <Label fx:id="lblTotalAmount" text="0.00"/>
+            </HBox>
+            
+            <!-- Description -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Description:" minWidth="120" alignment="TOP_LEFT"/>
+                <TextArea fx:id="txtDescription" prefWidth="300" prefHeight="60" 
+                          promptText="Enter description (optional)" wrapText="true"/>
+            </HBox>
+            
+            <!-- Schedule Transfer Option -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <CheckBox fx:id="chkScheduleTransfer" text="Schedule for later" onAction="#handleScheduleTransfer"/>
+            </HBox>
+            
+            <!-- Schedule Date (visible only when Schedule checkbox is checked) -->
+            <HBox spacing="10" alignment="CENTER_LEFT" fx:id="hboxScheduleDate" visible="false" managed="false">
+                <Label text="Schedule Date:" minWidth="120"/>
+                <DatePicker fx:id="dateSchedule" prefWidth="150"/>
+            </HBox>
+        </VBox>
+    </TitledPane>
+    
+    <!-- Daily Limit Information -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Daily Transfer Limit:"/>
+        <Label fx:id="lblDailyLimit" text="0.00"/>
+        <Label text="Remaining:"/>
+        <Label fx:id="lblRemainingLimit" text="0.00"/>
+    </HBox>
+    
+    <!-- Error Message Display -->
+    <Text fx:id="txtErrorMessage" fill="RED" visible="false" textAlignment="CENTER" wrappingWidth="400"/>
+    
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="btnValidate" text="Validate Transfer" onAction="#handleValidate" defaultButton="false"/>
+        <Button fx:id="btnTransfer" text="Transfer Now" onAction="#handleTransfer" defaultButton="true" disable="true"/>
+        <Button fx:id="btnCancel" text="Cancel" onAction="#handleCancel"/>
+    </HBox>
+    
+    <!-- Progress Indicator -->
+    <ProgressIndicator fx:id="progressIndicator" visible="false" maxHeight="30" maxWidth="30"/>
+</VBox>

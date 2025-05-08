@@ -1,79 +1,261 @@
 package com.smartbank.model;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
+
 /**
- * Savings account with minimum balance requirement
+ * SavingsAccount extends Account and adds interest rate and withdrawal validation.
+ * Includes enhanced interest calculation properties.
  */
-public class SavingsAccount extends BankAccount {
-    private static final double DEFAULT_MINIMUM_BALANCE = 100.0;
-    private final double minimumBalance;
+@Entity
+@DiscriminatorValue("Savings")
+public class SavingsAccount extends Account {
+    @Column(name = "interestRate")
+    private double interestRate;
     
+    @Column(name = "dailyInterestRate")
+    private double dailyInterestRate;
+    
+    @Column(name = "compoundingMethod")
+    @Enumerated(EnumType.STRING)
+    private CompoundingMethod compoundingMethod = CompoundingMethod.DAILY;
+    
+    @Column(name = "lastInterestAccrualDate")
+    private String lastInterestAccrualDate;
+    
+    @Column(name = "lastInterestPostingDate")
+    private String lastInterestPostingDate;
+    
+    @Column(name = "accruedInterest")
+    private double accruedInterest;
+    
+    @Column(name = "minimumBalanceForInterest")
+    private double minimumBalanceForInterest;
+    
+    @Column(name = "interestTierType")
+    @Enumerated(EnumType.STRING)
+    private InterestTierType interestTierType = InterestTierType.FLAT;
+
     /**
-     * Constructor for creating a new savings account with default minimum balance
-     * 
-     * @param holderName The name of the account holder
-     * @param initialDeposit The initial deposit amount
-     * @throws IllegalArgumentException if the initial deposit is less than the minimum balance
+     * Method used to compound interest.
      */
-    public SavingsAccount(String holderName, double initialDeposit) throws IllegalArgumentException {
-        this(holderName, initialDeposit, DEFAULT_MINIMUM_BALANCE);
+    public enum CompoundingMethod {
+        DAILY,      // Interest compounded daily
+        MONTHLY,    // Interest compounded monthly
+        QUARTERLY,  // Interest compounded quarterly
+        ANNUALLY    // Interest compounded annually
     }
     
     /**
-     * Constructor for creating a new savings account with custom minimum balance
-     * 
-     * @param holderName The name of the account holder
-     * @param initialDeposit The initial deposit amount
-     * @param minimumBalance The minimum balance requirement
-     * @throws IllegalArgumentException if the initial deposit is less than the minimum balance
+     * Type of interest tier calculation.
      */
-    public SavingsAccount(String holderName, double initialDeposit, double minimumBalance) throws IllegalArgumentException {
-        super(holderName, initialDeposit);
-        this.minimumBalance = minimumBalance;
-        
-        if (initialDeposit < minimumBalance) {
-            throw new IllegalArgumentException("Initial deposit must be at least $" + minimumBalance);
-        }
+    public enum InterestTierType {
+        FLAT,       // Same interest rate regardless of balance
+        TIERED,     // Different interest rates for different balance tiers
+        BLENDED     // Blended interest rates based on balance tiers
+    }
+
+    // Default constructor required by JPA
+    protected SavingsAccount() {
+        super();
+    }
+
+    public SavingsAccount(User accountHolder, double initialBalance, double interestRate) {
+        super(accountHolder, initialBalance);
+        this.interestRate = interestRate;
+        this.dailyInterestRate = calculateDailyInterestRate(interestRate);
+        this.lastInterestAccrualDate = LocalDate.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+        this.lastInterestPostingDate = LocalDate.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+        this.accruedInterest = 0.0;
+        this.minimumBalanceForInterest = 0.0; // Default to no minimum balance requirement
     }
     
     /**
-     * Withdraws money from the account, ensuring minimum balance is maintained
-     * 
-     * @param amount The amount to withdraw
-     * @return true if the withdrawal was successful
-     * @throws IllegalArgumentException if the amount is negative
-     * @throws InsufficientBalanceException if the withdrawal would result in a balance below the minimum
+     * Calculate the daily interest rate from the annual interest rate.
+     * @param annualInterestRate The annual interest rate (e.g., 0.05 for 5%)
+     * @return The daily interest rate
      */
+    private double calculateDailyInterestRate(double annualInterestRate) {
+        return annualInterestRate / 365.0;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
+        this.dailyInterestRate = calculateDailyInterestRate(interestRate);
+    }
+    
+    public double getDailyInterestRate() {
+        return dailyInterestRate;
+    }
+    
+    public CompoundingMethod getCompoundingMethod() {
+        return compoundingMethod;
+    }
+    
+    public void setCompoundingMethod(CompoundingMethod compoundingMethod) {
+        this.compoundingMethod = compoundingMethod;
+    }
+    
+    public String getLastInterestAccrualDate() {
+        return lastInterestAccrualDate;
+    }
+    
+    public LocalDate getLastInterestAccrualLocalDate() {
+        if (lastInterestAccrualDate == null) return null;
+        return LocalDate.parse(lastInterestAccrualDate);
+    }
+    
+    public void setLastInterestAccrualDate(String lastInterestAccrualDate) {
+        this.lastInterestAccrualDate = lastInterestAccrualDate;
+    }
+    
+    public void setLastInterestAccrualDate(LocalDate lastInterestAccrualDate) {
+        this.lastInterestAccrualDate = lastInterestAccrualDate.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+    
+    public String getLastInterestPostingDate() {
+        return lastInterestPostingDate;
+    }
+    
+    public LocalDate getLastInterestPostingLocalDate() {
+        if (lastInterestPostingDate == null) return null;
+        return LocalDate.parse(lastInterestPostingDate);
+    }
+    
+    public void setLastInterestPostingDate(String lastInterestPostingDate) {
+        this.lastInterestPostingDate = lastInterestPostingDate;
+    }
+    
+    public void setLastInterestPostingDate(LocalDate lastInterestPostingDate) {
+        this.lastInterestPostingDate = lastInterestPostingDate.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+    
+    public double getAccruedInterest() {
+        return accruedInterest;
+    }
+    
+    public void setAccruedInterest(double accruedInterest) {
+        this.accruedInterest = accruedInterest;
+    }
+    
+    public double getMinimumBalanceForInterest() {
+        return minimumBalanceForInterest;
+    }
+    
+    public void setMinimumBalanceForInterest(double minimumBalanceForInterest) {
+        this.minimumBalanceForInterest = minimumBalanceForInterest;
+    }
+    
+    public InterestTierType getInterestTierType() {
+        return interestTierType;
+    }
+    
+    public void setInterestTierType(InterestTierType interestTierType) {
+        this.interestTierType = interestTierType;
+    }
+
     @Override
-    public boolean withdraw(double amount) throws IllegalArgumentException, InsufficientBalanceException {
+    public void withdraw(double amount) throws Exception {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Withdrawal amount must be positive");
+            throw new IllegalArgumentException("Withdrawal amount must be positive.");
         }
-        
-        if (balance - amount < minimumBalance) {
-            throw new InsufficientBalanceException("Withdrawal would break minimum balance requirement of $" + minimumBalance);
+        if (amount > balance) {
+            throw new Exception("Insufficient funds in savings account.");
         }
-        
         balance -= amount;
-        addTransaction(amount, TransactionType.WITHDRAWAL);
-        return true;
     }
     
     /**
-     * Gets the minimum balance requirement
-     * 
-     * @return The minimum balance requirement
+     * Accrue daily interest based on the current balance.
+     * This adds to the accrued interest amount but does not modify the account balance.
+     * @return The amount of interest accrued
      */
-    public double getMinimumBalance() {
-        return minimumBalance;
+    public double accrueInterest() {
+        // Check if balance meets the minimum requirement
+        if (balance < minimumBalanceForInterest) {
+            return 0.0;
+        }
+        
+        // Calculate daily interest based on the current balance
+        double dailyInterest = balance * dailyInterestRate;
+        
+        // Add to accrued interest
+        accruedInterest += dailyInterest;
+        
+        // Update the last accrual date
+        lastInterestAccrualDate = LocalDate.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+        
+        return dailyInterest;
     }
     
     /**
-     * Displays the account details including the minimum balance requirement
-     * 
-     * @return A string containing the account details
+     * Post accrued interest to the account balance.
+     * This applies all accrued interest to the account balance and resets the accrued interest to zero.
+     * @return The amount of interest posted
      */
+    public double postInterest() {
+        if (accruedInterest <= 0) {
+            return 0.0;
+        }
+        
+        // Add accrued interest to the balance
+        balance += accruedInterest;
+        
+        // Store the amount for return
+        double postedAmount = accruedInterest;
+        
+        // Reset accrued interest
+        accruedInterest = 0.0;
+        
+        // Update last posting date
+        lastInterestPostingDate = LocalDate.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+        
+        return postedAmount;
+    }
+    
+    /**
+     * Legacy method for backward compatibility.
+     * Applies interest directly to the balance without accrual.
+     */
+    public void applyInterest() {
+        double interestAmount = balance * interestRate;
+        balance += interestAmount;
+    }
+
     @Override
-    public String displayAccountDetails() {
-        return super.displayAccountDetails() + String.format("\nMinimum Balance: $%.2f", minimumBalance);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SavingsAccount that = (SavingsAccount) o;
+        return Double.compare(that.interestRate, interestRate) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), interestRate);
+    }
+
+    @Override
+    public String toString() {
+        return "SavingsAccount{" +
+                "accountNumber=" + getAccountNumber() +
+                ", accountHolder=" + getAccountHolder().getUsername() +
+                ", balance=" + getBalance() +
+                ", interestRate=" + interestRate +
+                ", accruedInterest=" + accruedInterest +
+                ", compoundingMethod=" + compoundingMethod +
+                ", lastInterestAccrualDate=" + lastInterestAccrualDate +
+                ", lastInterestPostingDate=" + lastInterestPostingDate +
+                '}';
     }
 }

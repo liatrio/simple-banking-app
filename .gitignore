@@ -48,3 +48,72 @@ replay_pid*
 
 # Compiled files
 /target/
+
+# Added by Claude Task Master
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+# Dependency directories
+node_modules/
+# Environment variables
+.env
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+
+# Database files
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sql
+*.backup
+*.bak
+smartbank.db
+# Timestamped database backups
+smartbank.db.*
+*.db.backup.*
+*.db.[0-9]*
+*.sqlite.backup.*
+*.sqlite.[0-9]*
+*.sqlite3.backup.*
+*.sqlite3.[0-9]*
+
+# Backup files
+*~
+*.swp
+*.swo
+backup/
+backups/
+*.backup
+*-backup
+
+# Tools and IDE configuration files
+.cursor/
+.roo/
+.roomodes
+
+# Test files
+**/Test.java
+**/InheritanceTest.java
+**/test/temp/
+
+# Persistence/JPA specific
+src/META-INF/
+
+# Environment and configuration files
+.env
+.env.example
+.env.*
+
+**/.claude/settings.local.json

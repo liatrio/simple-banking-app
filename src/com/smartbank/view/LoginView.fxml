@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.smartbank.controller.LoginController">
+    <center>
+        <VBox spacing="15" alignment="CENTER" maxWidth="400">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <!-- Header -->
+            <Label text="SmartBank Login" styleClass="login-header"/>
+            
+            <!-- Form Fields -->
+            <GridPane hgap="10" vgap="10" alignment="CENTER">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="100" prefWidth="100"/>
+                    <ColumnConstraints minWidth="200" prefWidth="200"/>
+                </columnConstraints>
+                
+                <!-- Username Field -->
+                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtUsername" promptText="Enter your username" 
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                
+                <!-- Password Field -->
+                <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="txtPassword" promptText="Enter your password" 
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                
+                <!-- Remember Me Checkbox -->
+                <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                    <CheckBox fx:id="chkRememberMe" text="Remember me"/>
+                </HBox>
+            </GridPane>
+            
+            <!-- Error Message -->
+            <Text fx:id="txtErrorMessage" fill="RED" visible="false"/>
+            
+            <!-- Buttons -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="btnLogin" text="Login" styleClass="primary-button" 
+                        onAction="#handleLogin" defaultButton="true"/>
+                <Button fx:id="btnRegister" text="Register" onAction="#handleRegister"/>
+            </HBox>
+            
+            <!-- Loading Indicator -->
+            <ProgressIndicator fx:id="progressIndicator" visible="false" maxHeight="30" maxWidth="30"/>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER">
+            <padding>
+                <Insets bottom="10"/>
+            </padding>
+            <Label text="© 2025 SmartBank Application" styleClass="copyright-text"/>
+        </HBox>
+    </bottom>
+</BorderPane>
