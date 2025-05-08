@@ -1,0 +1,160 @@
+/* Achromatopsia (Complete Color Blindness) Color Accommodation */
+
+/* Redefine all colors with monochrome alternatives for maximum contrast */
+.root {
+    /* Using grayscale palette for all colors */
+    -fx-text-fill: #000000;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #BBBBBB;
+    -fx-text-fill: #000000;
+    -fx-border-color: #888888;
+}
+
+.button:hover {
+    -fx-background-color: #999999;
+}
+
+.primary-button {
+    -fx-background-color: #333333;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #000000;
+}
+
+.primary-button:hover {
+    -fx-background-color: #222222;
+}
+
+.account-balance {
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+.logout-button {
+    -fx-background-color: #333333;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #000000;
+}
+
+.logout-button:hover {
+    -fx-background-color: #222222;
+}
+
+/* Table styling */
+.table-view .column-header {
+    -fx-background-color: #CCCCCC;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #CCCCCC, #AAAAAA);
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #EEEEEE;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #999999;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Chart colors with patterns and textures */
+.balance-history-chart .chart-series-line {
+    -fx-stroke: #000000;
+    -fx-stroke-width: 3px;
+}
+
+.balance-history-chart .chart-line-symbol {
+    -fx-background-color: #000000, #FFFFFF;
+    -fx-background-insets: 0, 2;
+}
+
+.income-expense-chart .chart-bar {
+    -fx-bar-fill: #333333;
+    -fx-background-color: linear-gradient(to right, #333333 80%, #666666 80%, #666666 100%);
+}
+
+.income-expense-chart .default-color1.chart-bar {
+    -fx-bar-fill: #888888;
+    -fx-background-color: linear-gradient(to right, #888888 80%, #AAAAAA 80%, #AAAAAA 100%);
+}
+
+.monthly-comparison-chart .chart-bar {
+    -fx-bar-fill: #555555;
+    -fx-background-color: linear-gradient(to bottom, #555555 50%, #777777 50%, #777777 100%);
+}
+
+.monthly-comparison-chart .negative.chart-bar {
+    -fx-bar-fill: #AAAAAA;
+    -fx-background-color: linear-gradient(to bottom, #AAAAAA 50%, #CCCCCC 50%, #CCCCCC 100%);
+}
+
+/* Pie chart colors - using textures and patterns */
+.category-chart .default-color0.chart-pie { 
+    -fx-pie-color: #000000;
+    -fx-background-color: #000000;
+}
+.category-chart .default-color1.chart-pie { 
+    -fx-pie-color: #333333;
+    -fx-background-color: linear-gradient(to right, #333333 50%, #444444 50%);
+}
+.category-chart .default-color2.chart-pie { 
+    -fx-pie-color: #666666;
+    -fx-background-color: linear-gradient(to bottom, #666666 50%, #777777 50%);
+}
+.category-chart .default-color3.chart-pie { 
+    -fx-pie-color: #999999;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 70%, #999999, #888888);
+}
+.category-chart .default-color4.chart-pie { 
+    -fx-pie-color: #CCCCCC;
+    -fx-background-color: linear-gradient(to right, #CCCCCC 33%, #BBBBBB 33%, #BBBBBB 66%, #CCCCCC 66%);
+}
+.category-chart .default-color5.chart-pie { 
+    -fx-pie-color: #FFFFFF;
+    -fx-background-color: #FFFFFF;
+}
+.category-chart .default-color6.chart-pie { 
+    -fx-pie-color: #777777;
+    -fx-background-color: linear-gradient(to right bottom, #777777 25%, #888888 25%, #888888 50%, #777777 50%, #777777 75%, #888888 75%);
+}
+.category-chart .default-color7.chart-pie { 
+    -fx-pie-color: #AAAAAA;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 50%, #AAAAAA, #999999);
+}
+
+/* Status colors */
+.status-success {
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+.status-warning {
+    -fx-text-fill: #444444;
+    -fx-font-weight: bold;
+}
+
+.status-error {
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}
+
+/* Dialog/Alert styling */
+.dialog-pane .header-panel {
+    -fx-background-color: #DDDDDD;
+}
+
+/* Add borders to improve contrast */
+.account-card {
+    -fx-border-width: 2px;
+    -fx-border-color: #000000;
+}
+
+/* Use patterns to differentiate elements that would normally rely on color */
+.chart-container {
+    -fx-border-width: 2px;
+    -fx-border-color: #333333;
+}

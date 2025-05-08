@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.smartbank.controller.StatementGenerationController">
+   <stylesheets>
+      <URL value="@application.css" />
+   </stylesheets>
+   
+   <top>
+      <VBox spacing="10">
+         <padding>
+            <Insets top="20" right="20" bottom="10" left="20" />
+         </padding>
+         <Label text="Account Statements" styleClass="page-title"/>
+         <Separator />
+      </VBox>
+   </top>
+   
+   <center>
+      <VBox spacing="20">
+         <padding>
+            <Insets top="10" right="20" bottom="20" left="20" />
+         </padding>
+         
+         <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+               <ColumnConstraints minWidth="100" prefWidth="150" />
+               <ColumnConstraints minWidth="200" prefWidth="300" hgrow="ALWAYS" />
+            </columnConstraints>
+            
+            <Label text="Account:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <ComboBox fx:id="accountComboBox" prefWidth="300" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            
+            <Label text="Statement Type:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <ComboBox fx:id="statementTypeComboBox" prefWidth="300" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            
+            <Label text="Start Date:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <DatePicker fx:id="startDatePicker" prefWidth="300" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            
+            <Label text="End Date:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <DatePicker fx:id="endDatePicker" prefWidth="300" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+            
+            <Button fx:id="generateButton" text="Generate Statement" 
+                  styleClass="action-button" GridPane.rowIndex="4" GridPane.columnIndex="1" 
+                  GridPane.halignment="RIGHT" />
+         </GridPane>
+         
+         <VBox spacing="10">
+            <HBox>
+               <Label text="Statement History" styleClass="section-header"/>
+               <Region HBox.hgrow="ALWAYS" />
+            </HBox>
+            
+            <TableView fx:id="statementsTableView" VBox.vgrow="ALWAYS" prefHeight="300">
+               <columns>
+                  <TableColumn fx:id="dateColumn" text="Generation Date" prefWidth="150" />
+                  <TableColumn fx:id="typeColumn" text="Type" prefWidth="100" />
+                  <TableColumn fx:id="periodColumn" text="Period" prefWidth="150" />
+                  <TableColumn fx:id="accountColumn" text="Account" prefWidth="150" />
+               </columns>
+            </TableView>
+         </VBox>
+      </VBox>
+   </center>
+   
+   <bottom>
+      <HBox spacing="10" alignment="CENTER_RIGHT">
+         <padding>
+            <Insets top="10" right="20" bottom="20" left="20" />
+         </padding>
+         <Button fx:id="viewButton" text="View" styleClass="action-button" />
+         <Button fx:id="downloadButton" text="Download" styleClass="action-button" />
+         <Button fx:id="emailButton" text="Email" styleClass="action-button" />
+      </HBox>
+   </bottom>
+</BorderPane>

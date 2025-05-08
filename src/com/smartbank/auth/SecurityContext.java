@@ -91,4 +91,16 @@ public class SecurityContext {
     public boolean isAuthenticated() {
         return currentSession != null && currentSession.isValid();
     }
+    
+    /**
+     * Get the current authenticated user.
+     * @return The current user, or null if no user is authenticated
+     */
+    public static com.smartbank.model.User getCurrentUser() {
+        SecurityContext instance = getInstance();
+        if (instance.isAuthenticated()) {
+            return instance.currentSession.getUser();
+        }
+        return null;
+    }
 }

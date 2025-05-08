@@ -1,0 +1,90 @@
+/* Medium Font Size CSS (Default) */
+
+.root {
+    -fx-font-size: 14px;
+}
+
+.heading {
+    -fx-font-size: 18px;
+}
+
+.page-title, .login-header {
+    -fx-font-size: 24px;
+}
+
+.table-view {
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-font-size: 14px;
+}
+
+.text-field, .password-field {
+    -fx-font-size: 14px;
+    -fx-pref-height: 30px;
+}
+
+.user-info {
+    -fx-font-size: 14px;
+}
+
+.account-title {
+    -fx-font-size: 16px;
+}
+
+.account-balance {
+    -fx-font-size: 20px;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+}
+
+.chart-legend-item {
+    -fx-font-size: 14px;
+}
+
+.chart-pie-label {
+    -fx-font-size: 14px;
+}
+
+.status-label {
+    -fx-font-size: 14px;
+}
+
+.copyright-text {
+    -fx-font-size: 12px;
+}
+
+.titled-pane > .title {
+    -fx-font-size: 14px;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-font-size: 14px;
+}
+
+.menu-bar .menu .label {
+    -fx-font-size: 14px;
+}
+
+.menu-item .label {
+    -fx-font-size: 14px;
+}
+
+.alert .content {
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .content {
+    -fx-font-size: 14px;
+}
+
+.axis .axis-label {
+    -fx-font-size: 14px;
+}
+
+.axis .axis-tick-mark {
+    -fx-font-size: 12px;
+}

@@ -31,6 +31,9 @@ public abstract class Account {
     @Column(nullable = false)
     private String creationDate;
     
+    @Column
+    private String accountName;
+    
     // Default constructor required by JPA
     protected Account() {
     }
@@ -60,6 +63,18 @@ public abstract class Account {
     
     public LocalDateTime getCreationDateTime() {
         return LocalDateTime.parse(creationDate);
+    }
+    
+    public String getAccountName() {
+        return accountName != null ? accountName : getClass().getSimpleName() + " " + accountNumber;
+    }
+    
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+    
+    public long getUserId() {
+        return accountHolder != null ? Long.parseLong(accountHolder.getUserId()) : 0;
     }
 
     public void deposit(double amount) {

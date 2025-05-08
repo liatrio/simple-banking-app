@@ -10,7 +10,15 @@ import java.util.Objects;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-    public enum Type { DEPOSIT, WITHDRAWAL, TRANSFER_IN, TRANSFER_OUT, PAYMENT, FEE, INTEREST, ADJUSTMENT }
+    public enum Type { 
+        DEPOSIT, WITHDRAWAL, TRANSFER_IN, TRANSFER_OUT, PAYMENT, FEE, INTEREST, ADJUSTMENT,
+        // Additional types for checking accounts
+        OVERDRAFT_FEE, MAINTENANCE_FEE, CHECK_PROCESSING,
+        // Additional types for investment accounts
+        MANAGEMENT_FEE, MARKET_GAIN, MARKET_LOSS, TRADE, DIVIDEND, REBALANCE,
+        // Account conversion
+        ACCOUNT_CONVERSION
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,6 +104,12 @@ public class Transaction {
     
     public Date getTimestamp() { return timestamp; }
     
+    /**
+     * Alias for getTimestamp for backward compatibility.
+     * @return The transaction timestamp
+     */
+    public Date getTransactionDateTime() { return timestamp; }
+    
     public String getDescription() { return description; }
     
     public void setDescription(String description) {
@@ -161,17 +175,38 @@ public class Transaction {
             case DEPOSIT:
             case TRANSFER_IN:
             case INTEREST:
+            case MARKET_GAIN:
+            case DIVIDEND:
                 return amount;
             case WITHDRAWAL:
             case TRANSFER_OUT:
             case PAYMENT:
             case FEE:
+            case OVERDRAFT_FEE:
+            case MAINTENANCE_FEE:
+            case MANAGEMENT_FEE:
+            case MARKET_LOSS:
                 return -amount;
             case ADJUSTMENT:
-                return amount; // Adjustment can be positive or negative
+            case TRADE:
+            case REBALANCE:
+            case ACCOUNT_CONVERSION:
+            case CHECK_PROCESSING:
+                return amount; // These can be positive or negative depending on context
             default:
                 return amount;
         }
+    }
+    
+    /**
+     * Determines if this transaction is a spending transaction
+     * (withdrawal, payment, fee, or outbound transfer)
+     * 
+     * @return true if this is a spending transaction
+     */
+    @Transient
+    public boolean isSpending() {
+        return getSignedAmount() < 0;
     }
     
     @Override

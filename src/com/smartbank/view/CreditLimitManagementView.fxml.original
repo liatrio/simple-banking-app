@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.smartbank.controller.CreditLimitManagementController"
+            prefHeight="600.0" prefWidth="900.0">
+    
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            
+            <Label text="Credit Limit Management" styleClass="page-title">
+                <font>
+                    <Font name="System Bold" size="20.0"/>
+                </font>
+            </Label>
+            
+            <Separator/>
+            
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Account:"/>
+                <ComboBox fx:id="accountComboBox" prefWidth="300"/>
+                <Button text="Load Account Details" onAction="#loadAccountDetails"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <Tab text="Account Details">
+                <VBox spacing="15" padding="15">
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="150" prefWidth="200"/>
+                            <ColumnConstraints prefWidth="300"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                        </rowConstraints>
+                        
+                        <Label text="Account Number:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="accountNumberLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Current Credit Limit:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="currentCreditLimitLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Initial Credit Limit:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="initialCreditLimitLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Credit Score:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="creditScoreLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        
+                        <Label text="On-Time Payments:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="onTimePaymentsLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Late Payments:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Label fx:id="latePaymentsLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Average Monthly Balance:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <Label fx:id="averageMonthlyBalanceLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Last Credit Limit Change:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                        <Label fx:id="lastCreditLimitChangeLabel" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Last Credit Score Update:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                        <Label fx:id="lastCreditScoreUpdateLabel" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Automatic Reviews:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                        <HBox spacing="10" GridPane.rowIndex="9" GridPane.columnIndex="1">
+                            <Label fx:id="automaticReviewsLabel"/>
+                            <Button fx:id="toggleAutomaticReviewsButton" text="Enable" onAction="#toggleAutomaticReviews"/>
+                        </HBox>
+                    </GridPane>
+                    
+                    <Separator/>
+                    
+                    <HBox spacing="10">
+                        <Button text="Evaluate Credit Limit" onAction="#evaluateCreditLimit"/>
+                        <Button text="Request Credit Limit Change" onAction="#showRequestCreditLimitChangeDialog"/>
+                    </HBox>
+                    
+                    <TitledPane text="Credit Limit Evaluation Results" fx:id="evaluationResultsPane" expanded="false">
+                        <VBox spacing="10">
+                            <GridPane hgap="10" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints minWidth="200" prefWidth="250"/>
+                                    <ColumnConstraints prefWidth="300"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
+                                
+                                <Label text="Recommendation:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <Label fx:id="recommendationLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Current Limit:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <Label fx:id="evaluationCurrentLimitLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Recommended Limit:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <Label fx:id="recommendedLimitLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Change Amount:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <Label fx:id="changeAmountLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Reason:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <Label fx:id="reasonLabel" wrapText="true" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                            </GridPane>
+                            
+                            <HBox spacing="10">
+                                <Button text="Apply Recommendation" fx:id="applyRecommendationButton" onAction="#applyRecommendation"/>
+                            </HBox>
+                        </VBox>
+                    </TitledPane>
+                </VBox>
+            </Tab>
+            
+            <Tab text="Credit History">
+                <VBox spacing="15" padding="15">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Button text="Refresh" onAction="#refreshCreditHistory"/>
+                    </HBox>
+                    
+                    <TableView fx:id="creditHistoryTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="historyDateColumn" text="Date" prefWidth="150"/>
+                            <TableColumn fx:id="historyEventTypeColumn" text="Event Type" prefWidth="150"/>
+                            <TableColumn fx:id="historyDescriptionColumn" text="Description" prefWidth="300"/>
+                            <TableColumn fx:id="historyOldValueColumn" text="Old Value" prefWidth="100"/>
+                            <TableColumn fx:id="historyNewValueColumn" text="New Value" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+            
+            <Tab text="Change Requests">
+                <VBox spacing="15" padding="15">
+                    <ToggleButton fx:id="showAllRequestsToggle" text="Show All Requests" selected="false" onAction="#toggleRequestView"/>
+                    
+                    <TableView fx:id="changeRequestsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="requestIdColumn" text="ID" prefWidth="50"/>
+                            <TableColumn fx:id="requestDateColumn" text="Date" prefWidth="150"/>
+                            <TableColumn fx:id="requestStatusColumn" text="Status" prefWidth="100"/>
+                            <TableColumn fx:id="requestSourceColumn" text="Source" prefWidth="100"/>
+                            <TableColumn fx:id="requestCurrentLimitColumn" text="Current Limit" prefWidth="100"/>
+                            <TableColumn fx:id="requestNewLimitColumn" text="Requested Limit" prefWidth="100"/>
+                            <TableColumn fx:id="requestChangeColumn" text="Change %" prefWidth="80"/>
+                            <TableColumn fx:id="requestReasonColumn" text="Reason" prefWidth="200"/>
+                        </columns>
+                    </TableView>
+                    
+                    <HBox spacing="10">
+                        <Button text="View Details" onAction="#viewRequestDetails"/>
+                        <Button text="Approve Request" fx:id="approveRequestButton" onAction="#approveRequest"/>
+                        <Button text="Reject Request" fx:id="rejectRequestButton" onAction="#rejectRequest"/>
+                    </HBox>
+                </VBox>
+            </Tab>
+            
+            <Tab text="Admin Functions" fx:id="adminTab">
+                <VBox spacing="15" padding="15">
+                    <TitledPane text="Credit Limit Batch Operations">
+                        <VBox spacing="10">
+                            <Button text="Run Automatic Credit Limit Reviews for All Accounts" 
+                                    onAction="#runAutomaticCreditLimitReviews" maxWidth="Infinity"/>
+                                    
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Result:"/>
+                                <Label fx:id="batchOperationResultLabel"/>
+                            </HBox>
+                        </VBox>
+                    </TitledPane>
+                    
+                    <TitledPane text="Pending Requests" expanded="true">
+                        <VBox spacing="10">
+                            <TableView fx:id="pendingRequestsTable" VBox.vgrow="ALWAYS" prefHeight="200">
+                                <columns>
+                                    <TableColumn fx:id="pendingIdColumn" text="ID" prefWidth="50"/>
+                                    <TableColumn fx:id="pendingAccountColumn" text="Account" prefWidth="100"/>
+                                    <TableColumn fx:id="pendingDateColumn" text="Date" prefWidth="150"/>
+                                    <TableColumn fx:id="pendingSourceColumn" text="Source" prefWidth="100"/>
+                                    <TableColumn fx:id="pendingCurrentLimitColumn" text="Current Limit" prefWidth="100"/>
+                                    <TableColumn fx:id="pendingNewLimitColumn" text="Requested Limit" prefWidth="100"/>
+                                    <TableColumn fx:id="pendingChangeColumn" text="Change %" prefWidth="80"/>
+                                </columns>
+                            </TableView>
+                            
+                            <HBox spacing="10">
+                                <Button text="Refresh" onAction="#refreshPendingRequests"/>
+                                <Button text="Process Selected" onAction="#processSelectedRequest"/>
+                            </HBox>
+                        </VBox>
+                    </TitledPane>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10" padding="10">
+            <Button text="Close" onAction="#close"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane>

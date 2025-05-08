@@ -56,4 +56,12 @@ public interface TransactionRepository extends Repository<Transaction, Long> {
      * @return A list of recent transactions for the specified account and type
      */
     List<Transaction> findRecentByAccountAndType(long accountNumber, Transaction.Type type, int limit);
+    
+    /**
+     * Find the most recent transactions for an account.
+     * @param accountNumber The account number
+     * @param limit The maximum number of transactions to return
+     * @return A list of recent transactions for the specified account
+     */
+    List<Transaction> findRecentByAccount(long accountNumber, int limit);
 }

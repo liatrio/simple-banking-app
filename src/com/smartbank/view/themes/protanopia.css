@@ -1,0 +1,71 @@
+/* Protanopia (Red-Green Color Blindness - Red Weak) Color Accommodation */
+
+/* Redefine frequently used colors with protanopia-friendly alternatives */
+.primary-button {
+    -fx-background-color: #0070BB; /* Blue instead of default blue - more distinct */
+}
+
+.primary-button:hover {
+    -fx-background-color: #005B99;
+}
+
+.account-balance {
+    -fx-text-fill: #0070BB; /* Blue instead of default blue */
+}
+
+.logout-button {
+    -fx-background-color: #DDAA00; /* Yellow-brown instead of red */
+    -fx-border-color: #BB8800;
+}
+
+.logout-button:hover {
+    -fx-background-color: #CC9900;
+}
+
+/* Chart colors */
+.balance-history-chart .chart-series-line {
+    -fx-stroke: #0070BB; /* Blue instead of default blue */
+}
+
+.balance-history-chart .chart-line-symbol {
+    -fx-background-color: #0070BB, white; /* Blue instead of default blue */
+}
+
+.income-expense-chart .chart-bar {
+    -fx-bar-fill: #0070BB; /* Blue instead of default blue */
+}
+
+.income-expense-chart .default-color1.chart-bar {
+    -fx-bar-fill: #DDAA00; /* Yellow-brown instead of red */
+}
+
+.monthly-comparison-chart .chart-bar {
+    -fx-bar-fill: #00AAAA; /* Teal instead of green */
+}
+
+.monthly-comparison-chart .negative.chart-bar {
+    -fx-bar-fill: #DDAA00; /* Yellow-brown instead of red */
+}
+
+/* Pie chart colors - high contrast with patterns */
+.category-chart .default-color0.chart-pie { -fx-pie-color: #0070BB; } /* Blue */
+.category-chart .default-color1.chart-pie { -fx-pie-color: #00AAAA; } /* Teal */
+.category-chart .default-color2.chart-pie { -fx-pie-color: #DDAA00; } /* Yellow-brown */
+.category-chart .default-color3.chart-pie { -fx-pie-color: #000000; } /* Black */
+.category-chart .default-color4.chart-pie { -fx-pie-color: #8800BB; } /* Purple */
+.category-chart .default-color5.chart-pie { -fx-pie-color: #FFFFFF; } /* White */
+.category-chart .default-color6.chart-pie { -fx-pie-color: #88CCFF; } /* Light blue */
+.category-chart .default-color7.chart-pie { -fx-pie-color: #777777; } /* Gray */
+
+/* Status colors */
+.status-success {
+    -fx-text-fill: #00AAAA; /* Teal instead of green */
+}
+
+.status-warning {
+    -fx-text-fill: #DDAA00; /* Yellow-brown instead of orange/yellow */
+}
+
+.status-error {
+    -fx-text-fill: #DDAA00; /* Yellow-brown instead of red */
+}

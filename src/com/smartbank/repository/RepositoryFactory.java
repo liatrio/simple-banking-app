@@ -1,16 +1,12 @@
 package com.smartbank.repository;
 
-import com.smartbank.repository.impl.InterestCalculationRecordRepositoryImpl;
-import com.smartbank.repository.impl.JpaAccountRepository;
-import com.smartbank.repository.impl.JpaRecurringTransactionExecutionRepository;
-import com.smartbank.repository.impl.JpaRecurringTransactionRepository;
-import com.smartbank.repository.impl.JpaTransactionRepository;
-import com.smartbank.repository.impl.JpaUserRepository;
+import com.smartbank.repository.impl.*;
 
 /**
  * Factory class for creating repository instances.
  */
 public class RepositoryFactory {
+    private static RepositoryFactory instance;
     private static AccountRepository accountRepository;
     private static TransactionRepository transactionRepository;
     private static UserRepository userRepository;
@@ -18,6 +14,11 @@ public class RepositoryFactory {
     private static InterestCalculationRecordRepository interestCalculationRecordRepository;
     private static RecurringTransactionRepository recurringTransactionRepository;
     private static RecurringTransactionExecutionRepository recurringTransactionExecutionRepository;
+    private static StatementRepository statementRepository;
+    private static CreditHistoryRepository creditHistoryRepository;
+    private static CreditLimitChangeRequestRepository creditLimitChangeRequestRepository;
+    private static SearchHistoryRepository searchHistoryRepository;
+    private static TransactionSearchRepository transactionSearchRepository;
     
     /**
      * Get an instance of the AccountRepository.
@@ -94,5 +95,95 @@ public class RepositoryFactory {
             recurringTransactionExecutionRepository = new JpaRecurringTransactionExecutionRepository();
         }
         return recurringTransactionExecutionRepository;
+    }
+    
+    /**
+     * Get an instance of the StatementRepository.
+     * @return The StatementRepository instance
+     */
+    public static synchronized StatementRepository getStatementRepository() {
+        if (statementRepository == null) {
+            statementRepository = new JpaStatementRepository();
+        }
+        return statementRepository;
+    }
+    
+    /**
+     * Get an instance of the CreditHistoryRepository.
+     * @return The CreditHistoryRepository instance
+     */
+    public static synchronized CreditHistoryRepository getCreditHistoryRepository() {
+        if (creditHistoryRepository == null) {
+            creditHistoryRepository = new JpaCreditHistoryRepository();
+        }
+        return creditHistoryRepository;
+    }
+    
+    /**
+     * Get an instance of the CreditLimitChangeRequestRepository.
+     * @return The CreditLimitChangeRequestRepository instance
+     */
+    public static synchronized CreditLimitChangeRequestRepository getCreditLimitChangeRequestRepository() {
+        if (creditLimitChangeRequestRepository == null) {
+            creditLimitChangeRequestRepository = new JpaCreditLimitChangeRequestRepository();
+        }
+        return creditLimitChangeRequestRepository;
+    }
+    
+    /**
+     * Get an instance of the SearchHistoryRepository.
+     * @return The SearchHistoryRepository instance
+     */
+    public static synchronized SearchHistoryRepository getSearchHistoryRepository() {
+        if (searchHistoryRepository == null) {
+            searchHistoryRepository = new JpaSearchHistoryRepository();
+        }
+        return searchHistoryRepository;
+    }
+    
+    /**
+     * Get an instance of the TransactionSearchRepository.
+     * @return The TransactionSearchRepository instance
+     */
+    public static synchronized TransactionSearchRepository getTransactionSearchRepository() {
+        if (transactionSearchRepository == null) {
+            transactionSearchRepository = new JpaTransactionSearchRepository();
+        }
+        return transactionSearchRepository;
+    }
+    
+    /**
+     * Get the singleton instance of the RepositoryFactory.
+     * @return The RepositoryFactory instance
+     */
+    public static synchronized RepositoryFactory getInstance() {
+        if (instance == null) {
+            instance = new RepositoryFactory();
+        }
+        return instance;
+    }
+    
+    /**
+     * Get a repository for a specific entity type.
+     * @param entityClass The entity class
+     * @param <T> The entity type
+     * @param <ID> The ID type
+     * @return The repository instance
+     */
+    @SuppressWarnings("unchecked")
+    public <T, ID> Repository<T, ID> getRepository(Class<T> entityClass) {
+        if (entityClass.getSimpleName().equals("User")) {
+            return (Repository<T, ID>) getUserRepository();
+        } else if (entityClass.getSimpleName().equals("Account")) {
+            return (Repository<T, ID>) getAccountRepository();
+        } else if (entityClass.getSimpleName().equals("Transaction")) {
+            return (Repository<T, ID>) getTransactionRepository();
+        } else if (entityClass.getSimpleName().equals("TransactionCategory")) {
+            return (Repository<T, ID>) getTransactionCategoryRepository();
+        } else if (entityClass.getSimpleName().equals("ThemePreference")) {
+            return (Repository<T, ID>) getSearchHistoryRepository();
+        } else {
+            throw new IllegalArgumentException("No repository available for entity: " + entityClass.getSimpleName());
+        }
     }
 }

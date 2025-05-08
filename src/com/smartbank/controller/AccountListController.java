@@ -44,9 +44,29 @@ public class AccountListController {
     public void refreshAccountList() {
         accountData.clear();
         try {
+            // Get the current user from the security context
+            com.smartbank.model.User currentUser = com.smartbank.auth.SecurityContext.getCurrentUser();
+            
+            if (currentUser == null) {
+                return;  // No user authenticated, nothing to show
+            }
+            
             java.sql.Connection conn = com.smartbank.util.DatabaseManager.getConnection();
-            java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
+            java.sql.PreparedStatement stmt;
+            java.sql.ResultSet rs;
+            
+            // Check if user is admin - admins can see all accounts
+            if (currentUser.hasPermission("SYSTEM_ADMIN") || "admin".equalsIgnoreCase(currentUser.getRole())) {
+                // Admin can see all accounts
+                stmt = conn.prepareStatement("SELECT * FROM accounts");
+                rs = stmt.executeQuery();
+            } else {
+                // Regular users can only see their own accounts
+                stmt = conn.prepareStatement("SELECT * FROM accounts WHERE userId = ?");
+                stmt.setString(1, currentUser.getUserId());
+                rs = stmt.executeQuery();
+            }
+            
             while (rs.next()) {
                 long accountNumber = rs.getLong("accountNumber");
                 String holder = rs.getString("userId");

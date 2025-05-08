@@ -36,6 +36,9 @@ public class User {
     
     @OneToMany(mappedBy = "accountHolder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts = new ArrayList<>();
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ThemePreference themePreference;
 
     // Default constructor required by JPA
     protected User() {
@@ -63,6 +66,14 @@ public class User {
     public String getUserId() {
         return userId;
     }
+    
+    /**
+     * Alias for getUserId.
+     * @return The user ID
+     */
+    public String getId() {
+        return userId;
+    }
 
     public String getUsername() {
         return username;
@@ -74,6 +85,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    
+    /**
+     * Check if the user has a specific permission.
+     * @param permission The permission to check
+     * @return true if the user has the permission
+     */
+    public boolean hasPermission(String permission) {
+        // For simplicity, admin role has all permissions
+        if ("admin".equalsIgnoreCase(role)) {
+            return true;
+        }
+        
+        // For other roles, delegate to RolePermission class
+        return com.smartbank.auth.RolePermission.getInstance().hasPermission(role, permission);
     }
     
     public String getFirstName() {
@@ -144,6 +170,33 @@ public class User {
         return Objects.hash(userId);
     }
 
+    /**
+     * Get the user's theme preference.
+     * @return The theme preference, or null if none exists
+     */
+    public ThemePreference getThemePreference() {
+        return themePreference;
+    }
+    
+    /**
+     * Set the user's theme preference.
+     * @param themePreference The theme preference
+     */
+    public void setThemePreference(ThemePreference themePreference) {
+        this.themePreference = themePreference;
+    }
+    
+    /**
+     * Create a default theme preference for this user if one doesn't already exist.
+     * @return The existing or newly created theme preference
+     */
+    public ThemePreference createDefaultThemePreference() {
+        if (themePreference == null) {
+            themePreference = new ThemePreference(this);
+        }
+        return themePreference;
+    }
+    
     @Override
     public String toString() {
         return "User{" +

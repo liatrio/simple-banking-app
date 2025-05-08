@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:id="rootPane" spacing="20" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smartbank.controller.AccessibilitySettingsController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <Label text="Accessibility &amp; Theme Settings" styleClass="page-title"/>
+    
+    <Separator/>
+    
+    <!-- Theme Selection -->
+    <VBox spacing="10">
+        <Label text="Theme" styleClass="heading"/>
+        
+        <HBox spacing="20">
+            <RadioButton fx:id="radioLightTheme" text="Light Theme" onAction="#handleThemeChange">
+                <toggleGroup>
+                    <ToggleGroup fx:id="themeToggleGroup"/>
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioDarkTheme" text="Dark Theme" toggleGroup="$themeToggleGroup" onAction="#handleThemeChange"/>
+            <RadioButton fx:id="radioHighContrastTheme" text="High Contrast Theme" toggleGroup="$themeToggleGroup" onAction="#handleThemeChange"/>
+        </HBox>
+    </VBox>
+    
+    <Separator/>
+    
+    <!-- Font Size -->
+    <VBox spacing="10">
+        <Label text="Font Size" styleClass="heading"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Select Font Size:"/>
+            <ComboBox fx:id="comboFontSize" onAction="#handleFontSizeChange" prefWidth="200"/>
+        </HBox>
+    </VBox>
+    
+    <Separator/>
+    
+    <!-- Color Blindness Accommodations -->
+    <VBox spacing="10">
+        <Label text="Color Blindness Accommodations" styleClass="heading"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Color Blindness Type:"/>
+            <ComboBox fx:id="comboColorBlindness" onAction="#handleColorBlindnessChange" prefWidth="300"/>
+        </HBox>
+    </VBox>
+    
+    <Separator/>
+    
+    <!-- Keyboard Navigation -->
+    <VBox spacing="10">
+        <Label text="Keyboard Navigation" styleClass="heading"/>
+        
+        <CheckBox fx:id="checkKeyboardNav" text="Enable Enhanced Keyboard Navigation" onAction="#handleKeyboardNavToggle">
+            <tooltip>
+                <Tooltip text="Enables additional keyboard shortcuts and focus indicators for easier navigation"/>
+            </tooltip>
+        </CheckBox>
+    </VBox>
+    
+    <Separator/>
+    
+    <!-- Screen Reader Support -->
+    <VBox spacing="10">
+        <Label text="Screen Reader Support" styleClass="heading"/>
+        
+        <CheckBox fx:id="checkScreenReader" text="Optimize for Screen Readers" onAction="#handleScreenReaderToggle">
+            <tooltip>
+                <Tooltip text="Adds additional attributes to elements for better screen reader compatibility"/>
+            </tooltip>
+        </CheckBox>
+    </VBox>
+    
+    <Separator/>
+    
+    <!-- Actions -->
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Reset to Defaults" onAction="#handleResetToDefaults"/>
+        <Button text="Save as Default" onAction="#handleSaveAsDefault" styleClass="primary-button"/>
+    </HBox>
+    
+    <!-- Status Message -->
+    <Label fx:id="lblStatus" styleClass="status-label"/>
+    
+</VBox>

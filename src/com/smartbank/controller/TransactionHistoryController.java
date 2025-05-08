@@ -221,6 +221,56 @@ public class TransactionHistoryController {
             return;
         }
         
+        // Check security - ensure user has access to this account
+        com.smartbank.model.User currentUser = com.smartbank.auth.SecurityContext.getCurrentUser();
+        boolean hasAccess = false;
+        
+        if (currentUser != null) {
+            boolean isAdmin = currentUser.hasPermission("SYSTEM_ADMIN") || "admin".equalsIgnoreCase(currentUser.getRole());
+            
+            if (isAdmin) {
+                // Admins have access to all accounts
+                hasAccess = true;
+                LOGGER.info("Admin user " + currentUser.getUsername() + " accessing account " + accountNumber);
+            } else {
+                // Regular users can only access their own accounts
+                try {
+                    // Check if account belongs to this user
+                    java.sql.Connection conn = com.smartbank.util.DatabaseManager.getConnection();
+                    java.sql.PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT COUNT(*) FROM accounts WHERE accountNumber = ? AND userId = ?");
+                    stmt.setLong(1, accountNumber);
+                    stmt.setString(2, currentUser.getUserId());
+                    java.sql.ResultSet rs = stmt.executeQuery();
+                    
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        hasAccess = true;
+                        LOGGER.info("User " + currentUser.getUsername() + " accessing their account " + accountNumber);
+                    } else {
+                        LOGGER.warning("Access denied: User " + currentUser.getUsername() + 
+                                      " attempted to access account " + accountNumber + " which they don't own");
+                    }
+                    
+                    rs.close();
+                    stmt.close();
+                } catch (Exception e) {
+                    LOGGER.log(Level.SEVERE, "Error checking account ownership: " + e.getMessage(), e);
+                }
+            }
+        } else {
+            LOGGER.warning("No authenticated user found while trying to access account " + accountNumber);
+        }
+        
+        if (!hasAccess) {
+            // User doesn't have access to this account
+            LOGGER.warning("Access denied to account " + accountNumber);
+            transactions.clear();
+            transactionTable.setItems(transactions);
+            transactionTable.setPlaceholder(new javafx.scene.control.Label(
+                "You don't have permission to view transactions for this account"));
+            return;
+        }
+        
         // Check if the account is in the combo box
         boolean accountFound = false;
         for (AccountItem item : accountComboBox.getItems()) {

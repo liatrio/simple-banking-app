@@ -10,6 +10,9 @@ import java.util.Set;
  */
 public class RolePermission {
     
+    // Common role constants
+    public static final String ADMIN = "admin";
+    
     // Singleton instance
     private static RolePermission instance;
     

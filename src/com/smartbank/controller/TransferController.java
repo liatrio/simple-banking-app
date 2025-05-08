@@ -177,7 +177,13 @@ public class TransferController {
      */
     private void loadAccounts() {
         try {
-            List<Account> accounts = accountRepository.findAll();
+            // Get current user
+            String currentUsername = com.smartbank.auth.SecurityContext.getInstance().getCurrentSession().getUser().getUsername();
+            
+            // Get accounts for current user specifically
+            List<Account> accounts = accountRepository.findByUser(com.smartbank.auth.SecurityContext.getInstance().getCurrentUser());
+            
+            LOGGER.info("Found " + accounts.size() + " accounts for user: " + currentUsername);
             
             cmbFromAccount.getItems().clear();
             cmbToAccount.getItems().clear();
@@ -187,6 +193,10 @@ public class TransferController {
             
             if (!accounts.isEmpty()) {
                 cmbFromAccount.getSelectionModel().select(0);
+                // Select different account for "to" if possible
+                if (accounts.size() > 1) {
+                    cmbToAccount.getSelectionModel().select(1);
+                }
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error loading accounts: " + e.getMessage(), e);

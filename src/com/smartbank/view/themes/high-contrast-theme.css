@@ -1,0 +1,374 @@
+/* High Contrast Theme CSS */
+
+.root {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* Text colors */
+.label {
+    -fx-text-fill: white;
+}
+
+/* Background colors */
+.background {
+    -fx-background-color: black;
+}
+
+/* Menu styling */
+.menu-bar {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 2 0;
+}
+
+.menu:hover, .menu:showing {
+    -fx-background-color: #0050FF;
+}
+
+.menu-item {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.menu-item:hover, .menu-item:focused {
+    -fx-background-color: #0050FF;
+    -fx-text-fill: white;
+}
+
+/* Table styling */
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+.table-view .table-column {
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: black;
+    -fx-background-radius: 0px;
+    -fx-padding: 0 0 5px 0;
+}
+
+.table-row-cell {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #0F0F0F;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #0050FF;
+    -fx-text-fill: white;
+}
+
+.table-row-cell .text {
+    -fx-fill: white;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.button:hover {
+    -fx-background-color: #0050FF;
+}
+
+.button:pressed {
+    -fx-background-color: #00309F;
+}
+
+.primary-button {
+    -fx-background-color: #0050FF;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.primary-button:hover {
+    -fx-background-color: #0040CF;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #00309F;
+}
+
+/* Text field styling */
+.text-field, .password-field {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-text-fill: white;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #0050FF;
+    -fx-border-width: 3px;
+}
+
+/* Logout button */
+.logout-button {
+    -fx-background-color: #FF0000;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.logout-button:hover {
+    -fx-background-color: #CF0000;
+}
+
+/* User info box */
+.user-info {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 2 0;
+}
+
+/* Dashboard cards */
+.account-card {
+    -fx-background-color: black;
+    -fx-background-radius: 0px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 0px;
+    -fx-effect: null;
+}
+
+.account-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.account-balance {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #00FFFF;
+}
+
+/* Chart styling */
+.chart-plot-background {
+    -fx-background-color: black;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: white;
+    -fx-stroke-width: 1px;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: white;
+    -fx-stroke-width: 1px;
+}
+
+.chart-alternative-row-fill {
+    -fx-fill: #0F0F0F;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.chart-legend {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+.chart-legend-item {
+    -fx-text-fill: white;
+}
+
+.chart-title {
+    -fx-text-fill: white;
+}
+
+.axis {
+    -fx-tick-label-fill: white;
+}
+
+.axis-label {
+    -fx-text-fill: white;
+}
+
+/* Dialog styling */
+.dialog-pane {
+    -fx-background-color: black;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 2 0;
+}
+
+.dialog-pane .content {
+    -fx-text-fill: white;
+}
+
+/* Scroll bar styling */
+.scroll-bar {
+    -fx-background-color: black;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: white;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #0050FF;
+}
+
+.scroll-bar .track {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+/* Titled pane styling */
+.titled-pane {
+    -fx-text-fill: white;
+}
+
+.titled-pane > .title {
+    -fx-background-color: black;
+    -fx-font-weight: bold;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.titled-pane > .content {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+/* Tab styling */
+.tab-pane {
+    -fx-background-color: black;
+}
+
+.tab {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+.tab:selected {
+    -fx-background-color: #0050FF;
+    -fx-focus-color: transparent;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-text-fill: white;
+}
+
+/* Hyperlink styling */
+.hyperlink {
+    -fx-text-fill: #00FFFF;
+    -fx-underline: true;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #00CCFF;
+}
+
+/* Focus styling */
+.control-with-focus:focused {
+    -fx-border-color: #0050FF;
+    -fx-border-width: 3px;
+}
+
+/* Status message styling */
+.status-success {
+    -fx-text-fill: #00FF00;
+}
+
+.status-warning {
+    -fx-text-fill: #FFFF00;
+}
+
+.status-error {
+    -fx-text-fill: #FF0000;
+}
+
+/* Alert and notification styling */
+.alert {
+    -fx-background-color: black;
+}
+
+.alert .header-panel {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 2 0;
+}
+
+.alert .content {
+    -fx-text-fill: white;
+}
+
+/* Color adjustments for charts */
+.balance-history-chart .chart-series-line {
+    -fx-stroke: #00FFFF;
+    -fx-stroke-width: 3px;
+}
+
+.balance-history-chart .chart-line-symbol {
+    -fx-background-color: #00FFFF, black;
+    -fx-background-insets: 0, 3;
+    -fx-background-radius: 7px;
+    -fx-padding: 7px;
+}
+
+.income-expense-chart .chart-bar {
+    -fx-bar-fill: #00FFFF;
+}
+
+.income-expense-chart .default-color1.chart-bar {
+    -fx-bar-fill: #FF0000;
+}
+
+.monthly-comparison-chart .chart-bar {
+    -fx-bar-fill: #00FF00;
+}
+
+.monthly-comparison-chart .negative.chart-bar {
+    -fx-bar-fill: #FF0000;
+}
+
+/* Pie chart colors */
+.chart-pie {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+
+.category-chart .default-color0.chart-pie { -fx-pie-color: #00FFFF; }
+.category-chart .default-color1.chart-pie { -fx-pie-color: #00FF00; }
+.category-chart .default-color2.chart-pie { -fx-pie-color: #FFFF00; }
+.category-chart .default-color3.chart-pie { -fx-pie-color: #FF0000; }
+.category-chart .default-color4.chart-pie { -fx-pie-color: #FF00FF; }
+.category-chart .default-color5.chart-pie { -fx-pie-color: #FFFFFF; }
+.category-chart .default-color6.chart-pie { -fx-pie-color: #FFAA00; }
+.category-chart .default-color7.chart-pie { -fx-pie-color: #AAAAAA; }

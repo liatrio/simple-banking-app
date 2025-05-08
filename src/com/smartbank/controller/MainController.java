@@ -4,6 +4,9 @@ import com.smartbank.auth.AuthenticationService;
 import com.smartbank.auth.AuthenticationServiceImpl;
 import com.smartbank.auth.SecurityContext;
 import com.smartbank.auth.UserSession;
+import com.smartbank.model.ThemePreference;
+import com.smartbank.service.theme.ThemeService;
+import com.smartbank.service.theme.ThemeServiceImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +47,7 @@ public class MainController {
     private UserSession userSession;
     private AuthenticationService authService;
     private Timer sessionTimer;
+    private ThemeService themeService;
     
     /**
      * Initialize the controller.
@@ -52,6 +56,9 @@ public class MainController {
     public void initialize() {
         // Create authentication service
         authService = new AuthenticationServiceImpl();
+        
+        // Get theme service
+        themeService = ThemeServiceImpl.getInstance();
         
         // Default user info (visible=false until login)
         if (userInfoBox != null) {
@@ -93,12 +100,52 @@ public class MainController {
                 userInfoBox.setVisible(true);
             }
             
+            // Load user theme preferences
+            String userId = userSession.getUser().getUserId();
+            themeService.loadPreferences(userId);
+            
+            // Apply theme to the current scene
+            Scene scene = contentArea.getScene();
+            if (scene != null) {
+                applyCurrentThemeSettings(scene);
+            }
+            
             // Start session timer
             startSessionTimer();
             
-            // Show account list as default view
-            showAccountList(null);
+            // Show dashboard as default view
+            showDashboard(null);
         }
+    }
+    
+    /**
+     * Apply the current theme settings to the specified scene.
+     * 
+     * @param scene The scene to apply theme settings to
+     */
+    private void applyCurrentThemeSettings(Scene scene) {
+        if (scene == null) {
+            return;
+        }
+        
+        // Apply theme
+        themeService.applyTheme(scene, themeService.getCurrentTheme());
+        
+        // Apply font size
+        themeService.setFontSize(scene, themeService.getCurrentFontSize());
+        
+        // Apply color blindness accommodation
+        themeService.applyColorBlindnessAccommodation(scene, themeService.getCurrentColorBlindnessAccommodation());
+        
+        // Apply keyboard navigation
+        themeService.setKeyboardNavigationEnabled(scene, themeService.isKeyboardNavigationEnabled());
+        
+        // Apply screen reader support
+        themeService.setScreenReaderEnabled(scene, themeService.isScreenReaderEnabled());
+        
+        LOGGER.log(Level.INFO, "Applied theme settings: Theme={0}, FontSize={1}, ColorBlindness={2}", 
+                new Object[]{themeService.getCurrentTheme(), themeService.getCurrentFontSize(), 
+                    themeService.getCurrentColorBlindnessAccommodation()});
     }
     
     /**
@@ -216,6 +263,13 @@ public class MainController {
             loadView("/com/smartbank/view/AccountListView.fxml");
         }
     }
+    
+    @FXML
+    private void showDashboard(ActionEvent event) {
+        if (checkAuthentication(null)) {
+            loadView("/com/smartbank/view/DashboardView.fxml");
+        }
+    }
 
     @FXML
     private void showAccountForm(ActionEvent event) {
@@ -289,6 +343,34 @@ public class MainController {
     private void showBudgetManagement(ActionEvent event) {
         if (checkAuthentication(null)) {
             loadView("/com/smartbank/view/BudgetView.fxml");
+        }
+    }
+    
+    @FXML
+    private void showStatementGeneration(ActionEvent event) {
+        if (checkAuthentication(null)) {
+            loadView("/com/smartbank/view/StatementGenerationView.fxml");
+        }
+    }
+    
+    @FXML
+    private void showCreditLimitManagement(ActionEvent event) {
+        if (checkAuthentication(null)) {
+            loadView("/com/smartbank/view/CreditLimitManagementView.fxml");
+        }
+    }
+    
+    @FXML
+    private void showTransactionSearch(ActionEvent event) {
+        if (checkAuthentication(null)) {
+            loadView("/com/smartbank/view/TransactionSearchView.fxml");
+        }
+    }
+    
+    @FXML
+    private void showChartView(ActionEvent event) {
+        if (checkAuthentication(null)) {
+            loadView("/com/smartbank/view/ChartView.fxml");
         }
     }
     
@@ -405,6 +487,123 @@ public class MainController {
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading view: " + e.getMessage(), e);
             e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Show the accessibility settings view.
+     * 
+     * @param event The action event
+     */
+    @FXML
+    private void showAccessibilitySettings(ActionEvent event) {
+        if (checkAuthentication(null)) {
+            loadView("/com/smartbank/view/AccessibilitySettingsView.fxml");
+        }
+    }
+    
+    /**
+     * Change the application theme.
+     * 
+     * @param theme The theme to apply
+     */
+    public void changeTheme(ThemeService.Theme theme) {
+        if (theme == null || contentArea == null) {
+            return;
+        }
+        
+        Scene scene = contentArea.getScene();
+        if (scene != null) {
+            themeService.applyTheme(scene, theme);
+            
+            // Save user preferences if a user is logged in
+            if (userSession != null) {
+                themeService.savePreferences(userSession.getUser().getUserId());
+            }
+        }
+    }
+    
+    /**
+     * Change the font size.
+     * 
+     * @param fontSize The font size to apply
+     */
+    public void changeFontSize(ThemeService.FontSize fontSize) {
+        if (fontSize == null || contentArea == null) {
+            return;
+        }
+        
+        Scene scene = contentArea.getScene();
+        if (scene != null) {
+            themeService.setFontSize(scene, fontSize);
+            
+            // Save user preferences if a user is logged in
+            if (userSession != null) {
+                themeService.savePreferences(userSession.getUser().getUserId());
+            }
+        }
+    }
+    
+    /**
+     * Apply color blindness accommodations.
+     * 
+     * @param type The type of color blindness to accommodate
+     */
+    public void applyColorBlindnessAccommodation(ThemeService.ColorBlindnessType type) {
+        if (type == null || contentArea == null) {
+            return;
+        }
+        
+        Scene scene = contentArea.getScene();
+        if (scene != null) {
+            themeService.applyColorBlindnessAccommodation(scene, type);
+            
+            // Save user preferences if a user is logged in
+            if (userSession != null) {
+                themeService.savePreferences(userSession.getUser().getUserId());
+            }
+        }
+    }
+    
+    /**
+     * Toggle keyboard navigation support.
+     * 
+     * @param enabled True to enable, false to disable
+     */
+    public void setKeyboardNavigationEnabled(boolean enabled) {
+        if (contentArea == null) {
+            return;
+        }
+        
+        Scene scene = contentArea.getScene();
+        if (scene != null) {
+            themeService.setKeyboardNavigationEnabled(scene, enabled);
+            
+            // Save user preferences if a user is logged in
+            if (userSession != null) {
+                themeService.savePreferences(userSession.getUser().getUserId());
+            }
+        }
+    }
+    
+    /**
+     * Toggle screen reader support.
+     * 
+     * @param enabled True to enable, false to disable
+     */
+    public void setScreenReaderEnabled(boolean enabled) {
+        if (contentArea == null) {
+            return;
+        }
+        
+        Scene scene = contentArea.getScene();
+        if (scene != null) {
+            themeService.setScreenReaderEnabled(scene, enabled);
+            
+            // Save user preferences if a user is logged in
+            if (userSession != null) {
+                themeService.savePreferences(userSession.getUser().getUserId());
+            }
         }
     }
 }

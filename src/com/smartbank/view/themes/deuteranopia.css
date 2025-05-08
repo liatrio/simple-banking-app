@@ -1,0 +1,71 @@
+/* Deuteranopia (Red-Green Color Blindness - Green Weak) Color Accommodation */
+
+/* Redefine frequently used colors with deuteranopia-friendly alternatives */
+.primary-button {
+    -fx-background-color: #0052CC; /* Deeper blue instead of default blue - more distinct */
+}
+
+.primary-button:hover {
+    -fx-background-color: #0040AA;
+}
+
+.account-balance {
+    -fx-text-fill: #0052CC; /* Deeper blue instead of default blue */
+}
+
+.logout-button {
+    -fx-background-color: #D6A100; /* Gold instead of red */
+    -fx-border-color: #B48900;
+}
+
+.logout-button:hover {
+    -fx-background-color: #C29000;
+}
+
+/* Chart colors */
+.balance-history-chart .chart-series-line {
+    -fx-stroke: #0052CC; /* Deeper blue instead of default blue */
+}
+
+.balance-history-chart .chart-line-symbol {
+    -fx-background-color: #0052CC, white; /* Deeper blue instead of default blue */
+}
+
+.income-expense-chart .chart-bar {
+    -fx-bar-fill: #0052CC; /* Deeper blue instead of default blue */
+}
+
+.income-expense-chart .default-color1.chart-bar {
+    -fx-bar-fill: #D6A100; /* Gold instead of red */
+}
+
+.monthly-comparison-chart .chart-bar {
+    -fx-bar-fill: #007C9E; /* Teal-blue instead of green */
+}
+
+.monthly-comparison-chart .negative.chart-bar {
+    -fx-bar-fill: #D6A100; /* Gold instead of red */
+}
+
+/* Pie chart colors - high contrast with patterns */
+.category-chart .default-color0.chart-pie { -fx-pie-color: #0052CC; } /* Deeper blue */
+.category-chart .default-color1.chart-pie { -fx-pie-color: #007C9E; } /* Teal-blue */
+.category-chart .default-color2.chart-pie { -fx-pie-color: #D6A100; } /* Gold */
+.category-chart .default-color3.chart-pie { -fx-pie-color: #000000; } /* Black */
+.category-chart .default-color4.chart-pie { -fx-pie-color: #8400AB; } /* Purple */
+.category-chart .default-color5.chart-pie { -fx-pie-color: #FFFFFF; } /* White */
+.category-chart .default-color6.chart-pie { -fx-pie-color: #1CADE4; } /* Light blue */
+.category-chart .default-color7.chart-pie { -fx-pie-color: #777777; } /* Gray */
+
+/* Status colors */
+.status-success {
+    -fx-text-fill: #007C9E; /* Teal-blue instead of green */
+}
+
+.status-warning {
+    -fx-text-fill: #D6A100; /* Gold instead of orange/yellow */
+}
+
+.status-error {
+    -fx-text-fill: #D6A100; /* Gold instead of red */
+}

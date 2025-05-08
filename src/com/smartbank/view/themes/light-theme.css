@@ -1,0 +1,270 @@
+/* Light Theme CSS */
+
+.root {
+    -fx-background-color: white;
+    -fx-text-fill: #333333;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* Text colors */
+.label {
+    -fx-text-fill: #333333;
+}
+
+/* Background colors */
+.background {
+    -fx-background-color: white;
+}
+
+/* Menu styling */
+.menu-bar {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu:hover, .menu:showing {
+    -fx-background-color: #e9ecef;
+}
+
+.menu-item {
+    -fx-background-color: white;
+}
+
+.menu-item:hover, .menu-item:focused {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+}
+
+/* Table styling */
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f2f2f2;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-column {
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #f2f2f2, #dddddd);
+    -fx-background-radius: 4px 4px 0px 0px;
+    -fx-padding: 0 0 5px 0;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #f2f2f2;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #cfe8fc;
+    -fx-text-fill: #333333;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: #333333;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.button:hover {
+    -fx-background-color: #e6e6e6;
+}
+
+.button:pressed {
+    -fx-background-color: #d9d9d9;
+}
+
+.primary-button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-border-color: #1976D2;
+}
+
+.primary-button:hover {
+    -fx-background-color: #0d8aee;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #0c7cd5;
+}
+
+/* Text field styling */
+.text-field, .password-field {
+    -fx-background-color: white;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-text-fill: #333333;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #2196F3;
+}
+
+/* Logout button */
+.logout-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-border-color: #d32f2f;
+}
+
+.logout-button:hover {
+    -fx-background-color: #e53935;
+}
+
+/* User info box */
+.user-info {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Dashboard cards */
+.account-card {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 5px;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.account-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.account-balance {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2196F3;
+}
+
+/* Chart styling */
+.chart-plot-background {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #e9ecef;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e9ecef;
+}
+
+.chart-alternative-row-fill {
+    -fx-fill: #f8f9fa;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+/* Dialog styling */
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Scroll bar styling */
+.scroll-bar {
+    -fx-background-color: white;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #c1c1c1;
+    -fx-background-radius: 5em;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #a8a8a8;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #f2f2f2;
+}
+
+/* Titled pane styling */
+.titled-pane {
+    -fx-text-fill: #495057;
+}
+
+.titled-pane > .title {
+    -fx-background-color: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    -fx-font-weight: bold;
+}
+
+.titled-pane > .content {
+    -fx-background-color: white;
+    -fx-border-color: #e9ecef;
+}
+
+/* Tab styling */
+.tab-pane {
+    -fx-background-color: white;
+}
+
+.tab {
+    -fx-background-color: #f2f2f2;
+}
+
+.tab:selected {
+    -fx-background-color: white;
+    -fx-focus-color: transparent;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected > .tab-container > .tab-label {
+    -fx-text-fill: #2196F3;
+}
+
+/* Hyperlink styling */
+.hyperlink {
+    -fx-text-fill: #2196F3;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #0d8aee;
+}
+
+/* Focus styling */
+.control-with-focus:focused {
+    -fx-border-color: #2196F3;
+    -fx-border-width: 2px;
+}
+
+/* Status message styling */
+.status-success {
+    -fx-text-fill: #4CAF50;
+}
+
+.status-warning {
+    -fx-text-fill: #FF9800;
+}
+
+.status-error {
+    -fx-text-fill: #F44336;
+}
+
+/* Alert and notification styling */
+.alert {
+    -fx-background-color: white;
+}
+
+.alert .header-panel {
+    -fx-background-color: #f8f9fa;
+}

@@ -27,6 +27,7 @@ public abstract class BaseController {
     // Common references to security components
     protected final SecurityContext securityContext;
     protected final SessionFilter sessionFilter;
+    private final com.smartbank.service.ServiceFactory serviceFactory;
     
     /**
      * Constructor.
@@ -34,6 +35,15 @@ public abstract class BaseController {
     public BaseController() {
         this.securityContext = SecurityContext.getInstance();
         this.sessionFilter = SessionFilter.getInstance();
+        this.serviceFactory = com.smartbank.service.ServiceFactory.getInstance();
+    }
+    
+    /**
+     * Get the service factory.
+     * @return The service factory
+     */
+    protected com.smartbank.service.ServiceFactory getServiceFactory() {
+        return serviceFactory;
     }
     
     /**
@@ -203,6 +213,22 @@ public abstract class BaseController {
     }
     
     /**
+     * Show an error alert with a detailed message.
+     * @param title The alert title
+     * @param message The alert message
+     * @param detailedMessage The detailed error message
+     */
+    protected void showErrorAlert(String title, String message, String detailedMessage) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle(title);
+            alert.setHeaderText(message);
+            alert.setContentText(detailedMessage);
+            alert.showAndWait();
+        });
+    }
+    
+    /**
      * Show a warning alert.
      * @param title The alert title
      * @param message The alert message
@@ -210,6 +236,56 @@ public abstract class BaseController {
     protected void showWarningAlert(String title, String message) {
         Platform.runLater(() -> {
             Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
+    }
+    
+    /**
+     * Show an information alert with detailed message.
+     * @param title The alert title
+     * @param message The alert message
+     * @param detailedMessage The detailed message
+     */
+    protected void showInformationAlert(String title, String message, String detailedMessage) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle(title);
+            alert.setHeaderText(message);
+            alert.setContentText(detailedMessage);
+            alert.showAndWait();
+        });
+    }
+    
+    /**
+     * Show a confirmation dialog.
+     * @param title The dialog title
+     * @param headerText The header text
+     * @param contentText The content text
+     * @return true if the user confirmed, false otherwise
+     */
+    protected boolean showConfirmationDialog(String title, String headerText, String contentText) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        
+        return alert.showAndWait()
+            .filter(response -> response == javafx.scene.control.ButtonType.OK)
+            .isPresent();
+    }
+    
+    /**
+     * Show a generic alert.
+     * @param type The alert type
+     * @param title The alert title
+     * @param message The alert message
+     */
+    protected void showAlert(AlertType type, String title, String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(type);
             alert.setTitle(title);
             alert.setHeaderText(null);
             alert.setContentText(message);

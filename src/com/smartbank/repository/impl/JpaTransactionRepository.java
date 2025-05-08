@@ -86,4 +86,16 @@ public class JpaTransactionRepository extends JpaRepository<Transaction, Long> i
             return query.getResultList();
         });
     }
+    
+    @Override
+    public List<Transaction> findRecentByAccount(long accountNumber, int limit) {
+        return executeInTransaction(em -> {
+            TypedQuery<Transaction> query = em.createQuery(
+                    "SELECT t FROM Transaction t WHERE t.accountNumber = :accountNumber ORDER BY t.timestamp DESC",
+                    Transaction.class);
+            query.setParameter("accountNumber", accountNumber);
+            query.setMaxResults(limit);
+            return query.getResultList();
+        });
+    }
 }

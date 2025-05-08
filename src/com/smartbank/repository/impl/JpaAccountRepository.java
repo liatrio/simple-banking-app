@@ -25,6 +25,12 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
             return query.getResultList();
         });
     }
+    
+    @Override
+    public List<Account> findByUser(User user) {
+        // This is just an alias for findByAccountHolder
+        return findByAccountHolder(user);
+    }
 
     @Override
     public List<Account> findByUsername(String username) {
@@ -56,6 +62,33 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
                     Account.class);
             query.setParameter("maxBalance", maxBalance);
             return query.getResultList();
+        });
+    }
+    
+    @Override
+    public List<Account> findByType(String accountType) {
+        return executeInTransaction(em -> {
+            TypedQuery<Account> query = em.createQuery(
+                    "SELECT a FROM Account a WHERE TYPE(a) = :accountType OR a.accountType = :accountType",
+                    Account.class);
+            query.setParameter("accountType", accountType);
+            return query.getResultList();
+        });
+    }
+    
+    @Override
+    public Account findByAccountNumber(long accountNumber) {
+        return executeInTransaction(em -> {
+            TypedQuery<Account> query = em.createQuery(
+                    "SELECT a FROM Account a WHERE a.accountNumber = :accountNumber",
+                    Account.class);
+            query.setParameter("accountNumber", accountNumber);
+            try {
+                return query.getSingleResult();
+            } catch (Exception e) {
+                LOGGER.info("No account found with account number: " + accountNumber);
+                return null;
+            }
         });
     }
 }

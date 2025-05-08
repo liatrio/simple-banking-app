@@ -3,6 +3,8 @@ package com.smartbank.service;
 import com.smartbank.service.budgeting.BudgetService;
 import com.smartbank.service.budgeting.BudgetServiceImpl;
 import com.smartbank.service.category.*;
+import com.smartbank.service.credit.CreditLimitService;
+import com.smartbank.service.credit.CreditLimitServiceImpl;
 import com.smartbank.service.impl.AccountServiceImpl;
 import com.smartbank.service.impl.TransactionServiceImpl;
 import com.smartbank.service.impl.UserServiceImpl;
@@ -15,8 +17,14 @@ import com.smartbank.service.recurring.RecurringTransactionScheduler;
 import com.smartbank.service.recurring.RecurringTransactionNotifier;
 import com.smartbank.service.reporting.CategoryReportService;
 import com.smartbank.service.reporting.CategoryReportServiceImpl;
+import com.smartbank.service.search.TransactionSearchService;
+import com.smartbank.service.search.TransactionSearchServiceImpl;
+import com.smartbank.service.statement.StatementGenerationService;
+import com.smartbank.service.statement.StatementGenerationServiceImpl;
 import com.smartbank.service.transfer.TransferService;
 import com.smartbank.service.transfer.TransferServiceImpl;
+import com.smartbank.service.visualization.ChartService;
+import com.smartbank.service.visualization.ChartServiceImpl;
 
 /**
  * Factory class for creating service instances.
@@ -32,6 +40,11 @@ public class ServiceFactory {
     private static BudgetService budgetService;
     private static InterestCalculationService interestCalculationService;
     private static RecurringTransactionService recurringTransactionService;
+    private static StatementGenerationService statementGenerationService;
+    private static CreditLimitService creditLimitService;
+    private static ChartService chartService;
+    private static TransactionSearchService transactionSearchService;
+    private static ServiceFactory instance;
     
     /**
      * Get an instance of the AccountService.
@@ -173,5 +186,60 @@ public class ServiceFactory {
      */
     public static synchronized TransferService getTransferService() {
         return new TransferServiceImpl();
+    }
+    
+    /**
+     * Get an instance of the StatementGenerationService.
+     * @return The StatementGenerationService instance
+     */
+    public static synchronized StatementGenerationService getStatementGenerationService() {
+        if (statementGenerationService == null) {
+            statementGenerationService = new StatementGenerationServiceImpl();
+        }
+        return statementGenerationService;
+    }
+    
+    /**
+     * Get an instance of the CreditLimitService.
+     * @return The CreditLimitService instance
+     */
+    public static synchronized CreditLimitService getCreditLimitService() {
+        if (creditLimitService == null) {
+            creditLimitService = new CreditLimitServiceImpl();
+        }
+        return creditLimitService;
+    }
+    
+    /**
+     * Get an instance of the ChartService.
+     * @return The ChartService instance
+     */
+    public static synchronized ChartService getChartService() {
+        if (chartService == null) {
+            chartService = new ChartServiceImpl();
+        }
+        return chartService;
+    }
+    
+    /**
+     * Get an instance of the TransactionSearchService.
+     * @return The TransactionSearchService instance
+     */
+    public static synchronized TransactionSearchService getTransactionSearchService() {
+        if (transactionSearchService == null) {
+            transactionSearchService = new TransactionSearchServiceImpl();
+        }
+        return transactionSearchService;
+    }
+    
+    /**
+     * Get the singleton instance of the ServiceFactory.
+     * @return The ServiceFactory instance
+     */
+    public static synchronized ServiceFactory getInstance() {
+        if (instance == null) {
+            instance = new ServiceFactory();
+        }
+        return instance;
     }
 }

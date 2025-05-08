@@ -1,0 +1,71 @@
+/* Tritanopia (Blue-Yellow Color Blindness) Color Accommodation */
+
+/* Redefine frequently used colors with tritanopia-friendly alternatives */
+.primary-button {
+    -fx-background-color: #0000FF; /* Pure blue instead of default blue - more distinct */
+}
+
+.primary-button:hover {
+    -fx-background-color: #0000DD;
+}
+
+.account-balance {
+    -fx-text-fill: #0000FF; /* Pure blue instead of default blue */
+}
+
+.logout-button {
+    -fx-background-color: #FF0000; /* Pure red instead of default red */
+    -fx-border-color: #DD0000;
+}
+
+.logout-button:hover {
+    -fx-background-color: #DD0000;
+}
+
+/* Chart colors */
+.balance-history-chart .chart-series-line {
+    -fx-stroke: #0000FF; /* Pure blue instead of default blue */
+}
+
+.balance-history-chart .chart-line-symbol {
+    -fx-background-color: #0000FF, white; /* Pure blue instead of default blue */
+}
+
+.income-expense-chart .chart-bar {
+    -fx-bar-fill: #0000FF; /* Pure blue instead of default blue */
+}
+
+.income-expense-chart .default-color1.chart-bar {
+    -fx-bar-fill: #FF0000; /* Pure red instead of default red */
+}
+
+.monthly-comparison-chart .chart-bar {
+    -fx-bar-fill: #CC0000; /* Dark red instead of green - more distinguishable for tritanopia */
+}
+
+.monthly-comparison-chart .negative.chart-bar {
+    -fx-bar-fill: #FF0000; /* Pure red */
+}
+
+/* Pie chart colors - high contrast with patterns */
+.category-chart .default-color0.chart-pie { -fx-pie-color: #0000FF; } /* Pure blue */
+.category-chart .default-color1.chart-pie { -fx-pie-color: #CC0000; } /* Dark red */
+.category-chart .default-color2.chart-pie { -fx-pie-color: #FF00FF; } /* Magenta */
+.category-chart .default-color3.chart-pie { -fx-pie-color: #FF0000; } /* Pure red */
+.category-chart .default-color4.chart-pie { -fx-pie-color: #000000; } /* Black */
+.category-chart .default-color5.chart-pie { -fx-pie-color: #FFFFFF; } /* White */
+.category-chart .default-color6.chart-pie { -fx-pie-color: #FF77FF; } /* Light magenta */
+.category-chart .default-color7.chart-pie { -fx-pie-color: #777777; } /* Gray */
+
+/* Status colors */
+.status-success {
+    -fx-text-fill: #0000FF; /* Pure blue instead of green */
+}
+
+.status-warning {
+    -fx-text-fill: #FF00FF; /* Magenta instead of orange/yellow */
+}
+
+.status-error {
+    -fx-text-fill: #FF0000; /* Pure red */
+}
