@@ -1,6 +1,6 @@
 # Task ID: 23
 # Title: Implement Dashboard View
-# Status: pending
+# Status: done
 # Dependencies: 5, 6, 10
 # Priority: medium
 # Description: Create dashboard with account summaries and recent transactions as specified in Phase 5.

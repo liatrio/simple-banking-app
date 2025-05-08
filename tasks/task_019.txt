@@ -1,6 +1,6 @@
 # Task ID: 19
 # Title: Implement Additional Account Types
-# Status: pending
+# Status: done
 # Dependencies: 2, 8, 10
 # Priority: medium
 # Description: Add support for checking and investment account types as specified in Phase 3.

@@ -117,3 +117,8 @@ src/META-INF/
 .env.*
 
 **/.claude/settings.local.json
+
+# Added by Claude Task Master
+# Task files
+tasks.json
+tasks/ 

@@ -1,6 +1,6 @@
 # Task ID: 17
 # Title: Implement PDF Statement Generation
-# Status: pending
+# Status: done
 # Dependencies: 6, 10
 # Priority: medium
 # Description: Develop functionality to generate monthly/quarterly PDF statements as specified in Phase 3.

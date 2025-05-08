@@ -1,6 +1,6 @@
 # Task ID: 24
 # Title: Implement Charts and Graphs
-# Status: pending
+# Status: done
 # Dependencies: 6, 10, 23
 # Priority: low
 # Description: Create visualization components for transaction history as specified in Phase 5.
@@ -21,7 +21,7 @@
 Unit tests for chart data preparation. Test with various data sets and time periods. Test chart customization and export. Integration tests for chart display and interaction.
 
 # Subtasks:
-## 1. Integrate Chart Libraries and Create Data Preparation Service [pending]
+## 1. Integrate Chart Libraries and Create Data Preparation Service [done]
 ### Dependencies: None
 ### Description: Set up chart libraries (Chart.js, D3.js) and implement a data preparation service to transform financial data for visualization
 ### Details:
@@ -35,7 +35,7 @@ Unit tests for chart data preparation. Test with various data sets and time peri
 5. Test with various data volumes (small, medium, large datasets)
 6. Create mock data generators for testing edge cases (sparse data, outliers)
 
-## 2. Implement Balance and Transaction History Visualizations [pending]
+## 2. Implement Balance and Transaction History Visualizations [done]
 ### Dependencies: 24.1
 ### Description: Develop line and area charts for balance trends and transaction history visualization with time-based filtering
 ### Details:
@@ -53,7 +53,7 @@ Unit tests for chart data preparation. Test with various data sets and time peri
    - Sudden spikes/drops
    - Missing data handling
 
-## 3. Create Category and Comparison Chart Components [pending]
+## 3. Create Category and Comparison Chart Components [done]
 ### Dependencies: 24.1
 ### Description: Develop pie, donut, and bar charts for category analysis and period-over-period comparison visualizations
 ### Details:
@@ -72,7 +72,7 @@ Unit tests for chart data preparation. Test with various data sets and time peri
    - Dominant categories
    - Many small categories
 
-## 4. Develop Chart Customization and Export Functionality [pending]
+## 4. Develop Chart Customization and Export Functionality [done]
 ### Dependencies: 24.2, 24.3
 ### Description: Implement user customization options for charts and add functionality to export visualizations in various formats
 ### Details:

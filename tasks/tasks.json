@@ -223,7 +223,7 @@
         6,
         10
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -236,7 +236,7 @@
       "dependencies": [
         10
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -251,7 +251,7 @@
         8,
         10
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -294,7 +294,7 @@
         10,
         21
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -309,7 +309,7 @@
         6,
         10
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -324,7 +324,7 @@
         10,
         23
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": [
         {
           "id": 1,
@@ -332,7 +332,7 @@
           "description": "Set up chart libraries (Chart.js, D3.js) and implement a data preparation service to transform financial data for visualization",
           "dependencies": [],
           "details": "1. Research and select appropriate chart libraries based on visualization needs\n2. Install and configure selected libraries in the project\n3. Create a data preparation service with methods for:\n   - Time-based data aggregation (daily, weekly, monthly, yearly)\n   - Category-based data grouping\n   - Data normalization and formatting\n4. Implement data caching mechanisms for performance optimization\n5. Test with various data volumes (small, medium, large datasets)\n6. Create mock data generators for testing edge cases (sparse data, outliers)",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": 2,
@@ -342,7 +342,7 @@
             1
           ],
           "details": "1. Create line chart component for balance history with:\n   - Configurable time ranges (7d, 30d, 90d, 1y, all)\n   - Hover tooltips showing exact values\n   - Moving average overlay option\n2. Implement area chart for income vs. expenses over time\n3. Add transaction volume bar chart with:\n   - Transaction count visualization\n   - Amount-based visualization\n4. Test with various data patterns:\n   - Steady growth/decline\n   - Seasonal patterns\n   - Sudden spikes/drops\n   - Missing data handling",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": 3,
@@ -352,7 +352,7 @@
             1
           ],
           "details": "1. Implement pie/donut chart for expense categories with:\n   - Interactive segment selection\n   - Percentage and absolute value display\n   - Subcategory drill-down capability\n2. Create stacked bar chart for category comparison across time periods\n3. Develop horizontal bar chart for budget vs. actual spending\n4. Add period comparison charts with:\n   - Month-over-month comparison\n   - Year-over-year comparison\n   - Custom period comparison\n5. Test with various category distributions:\n   - Even distribution\n   - Dominant categories\n   - Many small categories",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": 4,
@@ -363,7 +363,7 @@
             3
           ],
           "details": "1. Create chart theme customization with:\n   - Color scheme selection\n   - Font size and style options\n   - Grid and axis customization\n2. Implement interactive features:\n   - Zoom and pan functionality\n   - Data point selection and highlighting\n   - Animation controls\n3. Add export functionality for:\n   - PNG/JPEG image export\n   - PDF export with multiple charts\n   - CSV data export\n4. Implement responsive design for charts across device sizes\n5. Test customization with accessibility considerations\n6. Create end-to-end tests for export functionality with various chart configurations",
-          "status": "pending"
+          "status": "done"
         }
       ]
     },
