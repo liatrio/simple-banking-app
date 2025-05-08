@@ -1,0 +1,177 @@
+# SmartBank Product Requirements Document (PRD)
+
+## 1. Overview
+SmartBank is a modern desktop banking application built with Java and JavaFX, simulating essential banking features. This PRD consolidates all planned features, technical details, implementation guidelines, testing standards, and process requirements for the project.
+
+---
+
+## 1.1 Prerequisites
+- Java JDK 11 or higher
+- Gradle 7.0 or higher (or use the included Gradle wrapper)
+- JavaFX 21.0.2 (used by the application)
+
+---
+
+## 1.2 Project Structure
+- `src/` - Source code directory
+  - `com.smartbank` - Main package
+    - `model/` - Data models and business logic
+    - `controller/` - Application controllers
+    - `view/` - FXML and CSS files
+    - `util/` - Utility classes
+  - `SmartBankApp.java` - Main application class
+
+---
+
+## 1.3 Technical Stack & Implementation
+- JavaFX for the user interface
+- Object-oriented design with inheritance and polymorphism
+- Exception handling for input validation
+- Data storage using ArrayLists (with plans for SQLite DB)
+- Static variables for account number generation
+- Logging using Java's built-in logging with a custom format
+- Source compatibility: Java 11
+- Main class: `com.smartbank.SmartBankApp`
+
+---
+
+## 2. Feature Requirements
+
+### Implementation Phases
+
+#### Phase 1: Data Persistence
+- Implement SQLite database for data persistence
+- Create JPA entities for accounts and transactions
+- Create repository interfaces and implementations
+- Create service classes to handle business logic
+- Develop tool to migrate in-memory data to database
+
+#### Phase 2: Security Features
+- Implement login system with username/password
+- Create user management functionality (create, edit, delete users)
+- Implement role-based access control (admin vs. regular users)
+- Implement secure password hashing and storage
+- Develop session management system with timeouts
+
+#### Phase 3: Advanced Account Features
+- Implement automated interest calculation for savings accounts
+- Create recurring transactions and scheduled payments system
+- Develop monthly/quarterly PDF statement generation
+- Implement dynamic credit limits based on account history
+- Add additional account types (checking, investment)
+
+#### Phase 4: Transaction Enhancements
+- Implement transfers between different accounts
+- Add transaction categorization system
+- Develop advanced transaction search and filtering
+- Create transaction notification system
+- Implement daily/weekly transaction limits
+
+#### Phase 5: UI Improvements
+- Create dashboard view with account summaries and recent transactions
+- Implement charts and graphs for transaction history visualization
+- Add dark mode theme option
+- Improve responsive design for window resizing
+- Implement accessibility features (screen reader support, keyboard navigation)
+
+---
+
+## 2.1 Application Features (Current & Planned)
+- Account management (open new accounts)
+- Transaction processing (deposits and withdrawals)
+- Account details display
+- Transaction history tracking
+- Multiple account types (Savings, Credit, planned: Checking, Investment)
+- Secure login and user management
+- Role-based access control (admin, regular users)
+- Scheduled/recurring transactions
+- PDF statement generation
+- Dashboard with summaries and charts
+- Accessibility and responsive UI
+
+---
+
+## 3. Implementation Guidelines
+- Use feature branches from `main` with naming: `feature/F{phase}.{task}-short-description`
+- Descriptive, conventional commit messages referencing task IDs (e.g., "Implements F1.1: Database integration")
+- Reference all new features in README.md
+- Update JavaDoc for all new classes and methods
+- Create user documentation for complex features
+- Definition of Done: feature implemented, unit tests passing, code reviewed, documentation updated, feature accepted
+- Document new dependencies in build.gradle with specific version numbers
+- Check for security vulnerabilities in dependencies
+- Follow Java code style conventions, consistent naming, and SOLID principles
+
+---
+
+## 4. Testing Requirements
+- Achieve 90%+ coverage for model classes, 80%+ for controllers, 85%+ for utilities, 80%+ overall
+- Test naming: `methodName_testScenario_expectedBehavior`
+- Add JavaDoc to test classes and document complex tests
+- Use meaningful, real-world test data
+- Mock external dependencies and services (prefer Mockito)
+- Ensure tests are independent, repeatable, and clean up after themselves
+- Implement unit, integration, UI, performance, and security tests
+- Automate testing in CI/CD; run on every pull request; publish test reports; set up notifications for failures
+
+---
+
+## 5. Progress Tracking & Status
+- All tasks and tests follow a checklist format with status markers: [ ] (Not Started), [P] (In Progress), [R] (Under Review), [X] (Completed)
+- Task ID format: F{phase}.{task} for features, T{phase}.{task} for tests
+- Phases are sequential: Foundation → Core Functionality → Advanced Features → UI Enhancements → Optimization
+- Dependencies between tasks are tracked explicitly
+- Progress is measured by status counts per phase
+
+---
+
+## 6. Build & Run Instructions
+
+### Building the Application
+Use Gradle as the build system. Recommended: Gradle Wrapper.
+
+#### Using Gradle Wrapper (recommended)
+```bash
+# On macOS/Linux
+./gradlew build
+# On Windows
+gradlew.bat build
+```
+#### Using Gradle (if installed globally)
+```bash
+gradle build
+```
+
+### Running the Application
+You can run the app directly using Gradle or the generated JAR file.
+
+#### Using Gradle Wrapper
+```bash
+# On macOS/Linux
+./gradlew run
+# On Windows
+gradlew.bat run
+```
+#### Using Gradle (if installed globally)
+```bash
+gradle run
+```
+#### Using JAR file
+After building:
+```bash
+java -jar build/libs/simple-banking-app.jar
+```
+
+---
+
+## 7. Troubleshooting
+- Ensure JavaFX modules are included in your Java installation or specified in `build.gradle` if you encounter JavaFX errors
+- Review console output for error messages if the application fails to start
+- Logging output uses Java's built-in logging with a custom format
+
+---
+
+## 8. Additional Notes
+- See `docs/planning/README.md` for further details on document structure and update instructions
+- See `FEATURE_IMPLEMENTATION_GUIDELINES.md` and `TESTING_GUIDELINES.md` for full process standards
+- This PRD is machine-readable and designed for AI-assisted project management
