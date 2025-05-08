@@ -1,0 +1,18 @@
+# Task ID: 18
+# Title: Implement Dynamic Credit Limits
+# Status: pending
+# Dependencies: 10
+# Priority: low
+# Description: Create system for dynamic credit limits based on account history as specified in Phase 3.
+# Details:
+1. Enhance CreditAccount entity with credit history tracking
+2. Create CreditLimitService
+3. Implement credit score calculation algorithm
+4. Add automatic limit adjustment rules
+5. Create limit change approval workflow
+6. Implement limit change notification
+7. Add credit history reporting
+8. Create credit limit management UI
+
+# Test Strategy:
+Unit tests for credit limit calculation with various scenarios. Test automatic adjustments with different account histories. Test approval workflow. Integration tests for credit limit management flow.

@@ -1,0 +1,22 @@
+# Task ID: 9
+# Title: Implement Repository Layer
+# Status: done
+# Dependencies: 8
+# Priority: high
+# Description: Create repository interfaces and implementations for data access operations.
+# Details:
+1. Create repository interfaces for:
+   - AccountRepository
+   - TransactionRepository
+   - UserRepository
+2. Implement JPA-based repository implementations
+3. Add methods for:
+   - CRUD operations
+   - Custom queries (findByAccountNumber, findByUser, etc.)
+   - Transaction filtering
+4. Implement proper transaction management
+5. Add error handling and logging
+6. Create repository factory or use dependency injection
+
+# Test Strategy:
+Unit tests for repository methods with mocked EntityManager. Integration tests with test database to verify query results. Test transaction management and rollback scenarios. Test custom query methods with various parameters.

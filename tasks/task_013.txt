@@ -1,0 +1,21 @@
+# Task ID: 13
+# Title: Implement User Management
+# Status: done
+# Dependencies: 12
+# Priority: medium
+# Description: Create functionality to create, edit, and delete users with role-based access control.
+# Details:
+1. Create UserManagementController class
+2. Implement user management UI with JavaFX
+3. Create user CRUD operations in service layer
+4. Implement role-based access control with:
+   - Admin role
+   - Regular user role
+   - Permission checking
+5. Add user profile management
+6. Implement password change functionality
+7. Add validation for user data
+8. Create admin dashboard for user management
+
+# Test Strategy:
+Unit tests for user management logic. Test CRUD operations for users. Test role-based access control. Test validation rules for user data. Integration tests for user management flow.

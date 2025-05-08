@@ -1,0 +1,23 @@
+# Task ID: 8
+# Title: Create JPA Entities
+# Status: done
+# Dependencies: 7
+# Priority: high
+# Description: Implement JPA entities for accounts and transactions to support database persistence.
+# Details:
+1. Add JPA dependencies to build.gradle (Hibernate recommended)
+2. Create JPA entity classes for:
+   - Account (base entity with inheritance)
+   - SavingsAccount
+   - CreditAccount
+   - Transaction
+   - User
+3. Add appropriate JPA annotations for:
+   - Primary keys and relationships
+   - Inheritance strategy (SINGLE_TABLE or JOINED)
+   - Column constraints and types
+4. Implement equals(), hashCode(), and toString() methods
+5. Create persistence.xml configuration
+
+# Test Strategy:
+Unit tests for entity mapping correctness. Test entity relationships and constraints. Test inheritance mapping for account types. Integration tests with test database to verify entity persistence.

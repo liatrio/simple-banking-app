@@ -1,0 +1,18 @@
+# Task ID: 22
+# Title: Implement Advanced Transaction Search
+# Status: pending
+# Dependencies: 6, 10, 21
+# Priority: medium
+# Description: Develop advanced transaction search and filtering functionality as specified in Phase 4.
+# Details:
+1. Create TransactionSearchService
+2. Implement search criteria model
+3. Add advanced query building
+4. Create search result pagination
+5. Implement sorting options
+6. Add search history tracking
+7. Create advanced search UI
+8. Implement search result export
+
+# Test Strategy:
+Unit tests for search logic with various criteria. Test query building and result filtering. Test pagination and sorting. Integration tests for search flow and result display.

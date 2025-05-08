@@ -1,0 +1,25 @@
+# Task ID: 2
+# Title: Create Base Model Classes
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Implement the core model classes for account management including abstract Account class and concrete implementations for different account types.
+# Details:
+1. Create an abstract Account class with common properties:
+   - accountNumber (generated using static counter)
+   - accountHolder
+   - balance
+   - creationDate
+   - Common methods: deposit(), withdraw(), getBalance()
+2. Implement SavingsAccount class extending Account
+   - Add interestRate property
+   - Override withdraw() with validation logic
+3. Implement CreditAccount class extending Account
+   - Add creditLimit property
+   - Override withdraw() with different validation logic
+4. Create User class for account ownership
+   - Properties: userId, username, password (hashed), role
+5. Implement proper exception handling for invalid operations
+
+# Test Strategy:
+Unit tests for each model class covering: account creation, deposit/withdrawal operations with valid and invalid amounts, interest calculations for savings accounts, credit limit enforcement for credit accounts. Test account number generation to ensure uniqueness.

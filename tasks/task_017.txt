@@ -1,0 +1,18 @@
+# Task ID: 17
+# Title: Implement PDF Statement Generation
+# Status: pending
+# Dependencies: 6, 10
+# Priority: medium
+# Description: Develop functionality to generate monthly/quarterly PDF statements as specified in Phase 3.
+# Details:
+1. Add PDF generation library (iText or Apache PDFBox) to build.gradle
+2. Create StatementGenerationService
+3. Implement statement data collection
+4. Create PDF template and layout
+5. Add statement generation scheduling
+6. Implement statement storage and retrieval
+7. Create statement download functionality
+8. Add statement email delivery option
+
+# Test Strategy:
+Unit tests for statement generation logic. Test PDF content and formatting. Test with various transaction volumes and account types. Integration tests for statement generation flow.

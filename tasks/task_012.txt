@@ -1,0 +1,21 @@
+# Task ID: 12
+# Title: Implement User Authentication System
+# Status: done
+# Dependencies: 10
+# Priority: high
+# Description: Create login system with username/password authentication as specified in Phase 2.
+# Details:
+1. Create LoginController class
+2. Implement login form with JavaFX
+3. Create authentication service with:
+   - Password verification
+   - User lookup
+   - Session creation
+4. Implement secure password hashing using bcrypt
+5. Add login attempt limiting
+6. Create user session management
+7. Implement remember-me functionality
+8. Add proper error handling and user feedback
+
+# Test Strategy:
+Unit tests for authentication logic with mocked repositories. Test password hashing and verification. Test login with valid and invalid credentials. Test login attempt limiting. Integration tests for authentication flow.

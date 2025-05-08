@@ -1,0 +1,18 @@
+# Task ID: 21
+# Title: Implement Transaction Categorization
+# Status: done
+# Dependencies: 6, 10
+# Priority: medium
+# Description: Create system for categorizing transactions as specified in Phase 4.
+# Details:
+1. Create TransactionCategory entity
+2. Enhance Transaction entity with category relationship
+3. Implement category management service
+4. Create automatic categorization rules
+5. Add manual category assignment
+6. Implement category-based reporting
+7. Create category management UI
+8. Add category-based budgeting features
+
+# Test Strategy:
+Unit tests for categorization logic. Test automatic and manual categorization. Test category-based reporting. Integration tests for category management flow.

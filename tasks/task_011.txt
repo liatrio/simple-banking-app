@@ -1,0 +1,20 @@
+# Task ID: 11
+# Title: Develop Data Migration Tool
+# Status: done
+# Dependencies: 3, 10
+# Priority: medium
+# Description: Create utility to migrate in-memory data to the SQLite database.
+# Details:
+1. Create DataMigrationTool class
+2. Implement methods to:
+   - Read data from in-memory ArrayLists
+   - Convert to JPA entities
+   - Persist to database
+   - Validate migration success
+3. Add progress tracking and reporting
+4. Implement error handling and rollback capability
+5. Add logging for migration steps
+6. Create command-line interface for migration tool
+
+# Test Strategy:
+Unit tests for data conversion logic. Integration tests with test data to verify migration process. Test error handling and rollback functionality. Test with various data volumes and edge cases.

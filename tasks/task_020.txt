@@ -1,0 +1,18 @@
+# Task ID: 20
+# Title: Implement Account Transfers
+# Status: done
+# Dependencies: 6, 10
+# Priority: high
+# Description: Create functionality for transfers between different accounts as specified in Phase 4.
+# Details:
+1. Create TransferService
+2. Implement transfer transaction logic
+3. Add validation for transfer eligibility
+4. Create transfer fee calculation
+5. Implement transfer limits
+6. Add transfer history tracking
+7. Create transfer UI components
+8. Implement scheduled transfers
+
+# Test Strategy:
+Unit tests for transfer logic with various scenarios. Test validation rules and limits. Test with different account types and currencies. Integration tests for transfer flow and transaction recording.

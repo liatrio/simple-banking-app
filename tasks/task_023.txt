@@ -1,0 +1,18 @@
+# Task ID: 23
+# Title: Implement Dashboard View
+# Status: pending
+# Dependencies: 5, 6, 10
+# Priority: medium
+# Description: Create dashboard with account summaries and recent transactions as specified in Phase 5.
+# Details:
+1. Create DashboardController
+2. Implement dashboard UI with JavaFX
+3. Add account summary widgets
+4. Create recent transaction list
+5. Implement quick action buttons
+6. Add alert notifications
+7. Create dashboard customization
+8. Implement dashboard refresh logic
+
+# Test Strategy:
+Unit tests for dashboard data collection. Test with various account configurations. Test refresh logic and data updates. Integration tests for dashboard display and interaction.

@@ -1,0 +1,384 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Project Setup and Structure",
+      "description": "Initialize the project with the required directory structure, Gradle configuration, and JavaFX setup according to the PRD specifications.",
+      "details": "1. Create a new Gradle project with Java 11 compatibility\n2. Configure build.gradle with JavaFX 21.0.2 dependency\n3. Set up the directory structure as specified in the PRD:\n   - src/com.smartbank/\n   - src/com.smartbank/model/\n   - src/com.smartbank/controller/\n   - src/com.smartbank/view/\n   - src/com.smartbank/util/\n4. Create SmartBankApp.java as the main application class\n5. Configure Gradle wrapper for cross-platform compatibility\n6. Set up basic logging configuration with Java's built-in logging\n7. Create initial README.md with project overview and build instructions",
+      "testStrategy": "Verify project structure matches PRD requirements. Test Gradle build and run commands to ensure the application compiles and launches successfully. Validate Java and JavaFX version compatibility.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Create Base Model Classes",
+      "description": "Implement the core model classes for account management including abstract Account class and concrete implementations for different account types.",
+      "details": "1. Create an abstract Account class with common properties:\n   - accountNumber (generated using static counter)\n   - accountHolder\n   - balance\n   - creationDate\n   - Common methods: deposit(), withdraw(), getBalance()\n2. Implement SavingsAccount class extending Account\n   - Add interestRate property\n   - Override withdraw() with validation logic\n3. Implement CreditAccount class extending Account\n   - Add creditLimit property\n   - Override withdraw() with different validation logic\n4. Create User class for account ownership\n   - Properties: userId, username, password (hashed), role\n5. Implement proper exception handling for invalid operations",
+      "testStrategy": "Unit tests for each model class covering: account creation, deposit/withdrawal operations with valid and invalid amounts, interest calculations for savings accounts, credit limit enforcement for credit accounts. Test account number generation to ensure uniqueness.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 3,
+      "title": "Implement In-Memory Data Storage",
+      "description": "Create utility classes to manage in-memory storage of accounts and transactions using ArrayLists as specified in the PRD.",
+      "details": "1. Create DataStore class with static ArrayLists for accounts and transactions\n2. Implement methods for:\n   - Adding/retrieving/updating accounts\n   - Recording transactions\n   - Searching accounts by number or owner\n   - Filtering transactions by account\n3. Implement Transaction class with:\n   - transactionId\n   - accountNumber\n   - amount\n   - type (DEPOSIT, WITHDRAWAL)\n   - timestamp\n   - description\n4. Add data validation and appropriate exception handling\n5. Implement singleton pattern for DataStore to ensure single instance",
+      "testStrategy": "Unit tests for DataStore operations: adding accounts, retrieving accounts by different criteria, recording transactions, and retrieving transaction history. Test concurrent access scenarios and edge cases like empty lists or non-existent accounts.",
+      "priority": "high",
+      "dependencies": [
+        2
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Create Basic UI Components",
+      "description": "Develop the initial JavaFX UI components for the banking application including main window, navigation, and basic screens.",
+      "details": "1. Create main application window in SmartBankApp.java\n2. Design and implement FXML layouts for:\n   - Main application frame with navigation\n   - Account listing view\n   - Account details view\n   - Transaction form\n   - Transaction history view\n3. Create corresponding CSS files for styling\n4. Implement basic navigation between screens\n5. Ensure responsive design for window resizing\n6. Set up resource loading for FXML files",
+      "testStrategy": "Manual UI testing to verify layouts render correctly. Test window resizing behavior. Verify navigation between screens works as expected. Create simple UI tests using TestFX to validate basic UI functionality.",
+      "priority": "medium",
+      "dependencies": [
+        1
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 5,
+      "title": "Implement Account Management Controllers",
+      "description": "Create controller classes to handle account management operations including creating accounts, viewing details, and processing transactions.",
+      "details": "1. Create AccountController class to handle:\n   - Creating new accounts (savings, credit)\n   - Displaying account details\n   - Updating account information\n2. Implement form validation for account creation\n3. Connect controller methods to UI components\n4. Implement error handling and user feedback\n5. Create utility methods for formatting account data for display\n6. Ensure proper MVC separation of concerns",
+      "testStrategy": "Unit tests for controller logic with mocked UI components. Test form validation with valid and invalid inputs. Test error handling scenarios. Integration tests for controller-model interaction.",
+      "priority": "high",
+      "dependencies": [
+        2,
+        3,
+        4
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 6,
+      "title": "Implement Transaction Processing",
+      "description": "Develop functionality to process deposits, withdrawals, and display transaction history.",
+      "details": "1. Create TransactionController class to handle:\n   - Processing deposits\n   - Processing withdrawals\n   - Displaying transaction history\n2. Implement validation logic for transaction amounts\n3. Add error handling for insufficient funds and other edge cases\n4. Create transaction receipt generation\n5. Implement transaction filtering and sorting\n6. Connect transaction processing to account balance updates",
+      "testStrategy": "Unit tests for transaction processing with various scenarios: valid deposits, valid withdrawals, insufficient funds, invalid amounts. Test transaction history retrieval and filtering. Integration tests for transaction-account interaction.",
+      "priority": "high",
+      "dependencies": [
+        3,
+        5
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 7,
+      "title": "Implement SQLite Database Integration",
+      "description": "Set up SQLite database for persistent data storage as specified in Phase 1 of the PRD.",
+      "details": "1. Add SQLite JDBC driver dependency to build.gradle\n2. Create database schema for accounts and transactions\n3. Implement DatabaseManager class for connection handling\n4. Create SQL scripts for table creation\n5. Implement proper connection pooling\n6. Add error handling for database operations\n7. Create utility methods for database initialization and verification",
+      "testStrategy": "Unit tests with in-memory SQLite database. Test connection establishment, table creation, and basic CRUD operations. Test error handling for database failures. Integration tests for database operations with test data.",
+      "priority": "high",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 8,
+      "title": "Create JPA Entities",
+      "description": "Implement JPA entities for accounts and transactions to support database persistence.",
+      "details": "1. Add JPA dependencies to build.gradle (Hibernate recommended)\n2. Create JPA entity classes for:\n   - Account (base entity with inheritance)\n   - SavingsAccount\n   - CreditAccount\n   - Transaction\n   - User\n3. Add appropriate JPA annotations for:\n   - Primary keys and relationships\n   - Inheritance strategy (SINGLE_TABLE or JOINED)\n   - Column constraints and types\n4. Implement equals(), hashCode(), and toString() methods\n5. Create persistence.xml configuration",
+      "testStrategy": "Unit tests for entity mapping correctness. Test entity relationships and constraints. Test inheritance mapping for account types. Integration tests with test database to verify entity persistence.",
+      "priority": "high",
+      "dependencies": [
+        7
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 9,
+      "title": "Implement Repository Layer",
+      "description": "Create repository interfaces and implementations for data access operations.",
+      "details": "1. Create repository interfaces for:\n   - AccountRepository\n   - TransactionRepository\n   - UserRepository\n2. Implement JPA-based repository implementations\n3. Add methods for:\n   - CRUD operations\n   - Custom queries (findByAccountNumber, findByUser, etc.)\n   - Transaction filtering\n4. Implement proper transaction management\n5. Add error handling and logging\n6. Create repository factory or use dependency injection",
+      "testStrategy": "Unit tests for repository methods with mocked EntityManager. Integration tests with test database to verify query results. Test transaction management and rollback scenarios. Test custom query methods with various parameters.",
+      "priority": "high",
+      "dependencies": [
+        8
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 10,
+      "title": "Implement Service Layer",
+      "description": "Create service classes to handle business logic and coordinate between controllers and repositories.",
+      "details": "1. Create service interfaces and implementations for:\n   - AccountService\n   - TransactionService\n   - UserService\n2. Implement business logic for:\n   - Account creation and management\n   - Transaction processing\n   - Balance calculations\n   - User management\n3. Add validation logic and business rules\n4. Implement proper exception handling\n5. Add logging for service operations\n6. Create service factory or use dependency injection",
+      "testStrategy": "Unit tests for service methods with mocked repositories. Test business logic with various scenarios. Test validation rules and exception handling. Integration tests for service-repository interaction.",
+      "priority": "high",
+      "dependencies": [
+        9
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 11,
+      "title": "Develop Data Migration Tool",
+      "description": "Create utility to migrate in-memory data to the SQLite database.",
+      "details": "1. Create DataMigrationTool class\n2. Implement methods to:\n   - Read data from in-memory ArrayLists\n   - Convert to JPA entities\n   - Persist to database\n   - Validate migration success\n3. Add progress tracking and reporting\n4. Implement error handling and rollback capability\n5. Add logging for migration steps\n6. Create command-line interface for migration tool",
+      "testStrategy": "Unit tests for data conversion logic. Integration tests with test data to verify migration process. Test error handling and rollback functionality. Test with various data volumes and edge cases.",
+      "priority": "medium",
+      "dependencies": [
+        3,
+        10
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 12,
+      "title": "Implement User Authentication System",
+      "description": "Create login system with username/password authentication as specified in Phase 2.",
+      "details": "1. Create LoginController class\n2. Implement login form with JavaFX\n3. Create authentication service with:\n   - Password verification\n   - User lookup\n   - Session creation\n4. Implement secure password hashing using bcrypt\n5. Add login attempt limiting\n6. Create user session management\n7. Implement remember-me functionality\n8. Add proper error handling and user feedback",
+      "testStrategy": "Unit tests for authentication logic with mocked repositories. Test password hashing and verification. Test login with valid and invalid credentials. Test login attempt limiting. Integration tests for authentication flow.",
+      "priority": "high",
+      "dependencies": [
+        10
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 13,
+      "title": "Implement User Management",
+      "description": "Create functionality to create, edit, and delete users with role-based access control.",
+      "details": "1. Create UserManagementController class\n2. Implement user management UI with JavaFX\n3. Create user CRUD operations in service layer\n4. Implement role-based access control with:\n   - Admin role\n   - Regular user role\n   - Permission checking\n5. Add user profile management\n6. Implement password change functionality\n7. Add validation for user data\n8. Create admin dashboard for user management",
+      "testStrategy": "Unit tests for user management logic. Test CRUD operations for users. Test role-based access control. Test validation rules for user data. Integration tests for user management flow.",
+      "priority": "medium",
+      "dependencies": [
+        12
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 14,
+      "title": "Implement Session Management",
+      "description": "Develop session management system with timeouts as specified in Phase 2.",
+      "details": "1. Create SessionManager class\n2. Implement session creation on login\n3. Add session timeout functionality\n4. Create session validation methods\n5. Implement secure session storage\n6. Add session renewal on activity\n7. Create logout functionality\n8. Implement session event listeners",
+      "testStrategy": "Unit tests for session management logic. Test session creation, validation, and timeout. Test session renewal and logout. Integration tests for session flow throughout application.",
+      "priority": "medium",
+      "dependencies": [
+        12
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 15,
+      "title": "Implement Interest Calculation for Savings Accounts",
+      "description": "Create automated interest calculation system for savings accounts as specified in Phase 3.",
+      "details": "1. Enhance SavingsAccount entity with interest calculation properties\n2. Create InterestCalculationService\n3. Implement daily interest accrual\n4. Add monthly interest posting\n5. Create interest transaction recording\n6. Implement interest rate management\n7. Add interest calculation history\n8. Create interest calculation scheduler",
+      "testStrategy": "Unit tests for interest calculation logic with various scenarios. Test daily accrual and monthly posting. Test with different interest rates and balance amounts. Integration tests for interest calculation and transaction recording.",
+      "priority": "medium",
+      "dependencies": [
+        10
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 16,
+      "title": "Implement Recurring Transactions",
+      "description": "Create system for recurring transactions and scheduled payments as specified in Phase 3.",
+      "details": "1. Create RecurringTransaction entity\n2. Implement RecurringTransactionService\n3. Add scheduling options (daily, weekly, monthly)\n4. Create transaction execution engine\n5. Implement modification and cancellation\n6. Add validation for recurring transactions\n7. Create notification system for upcoming transactions\n8. Implement transaction history tracking",
+      "testStrategy": "Unit tests for recurring transaction logic. Test scheduling with various frequencies. Test execution, modification, and cancellation. Integration tests for recurring transaction flow and execution.",
+      "priority": "medium",
+      "dependencies": [
+        6,
+        10
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 17,
+      "title": "Implement PDF Statement Generation",
+      "description": "Develop functionality to generate monthly/quarterly PDF statements as specified in Phase 3.",
+      "details": "1. Add PDF generation library (iText or Apache PDFBox) to build.gradle\n2. Create StatementGenerationService\n3. Implement statement data collection\n4. Create PDF template and layout\n5. Add statement generation scheduling\n6. Implement statement storage and retrieval\n7. Create statement download functionality\n8. Add statement email delivery option",
+      "testStrategy": "Unit tests for statement generation logic. Test PDF content and formatting. Test with various transaction volumes and account types. Integration tests for statement generation flow.",
+      "priority": "medium",
+      "dependencies": [
+        6,
+        10
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 18,
+      "title": "Implement Dynamic Credit Limits",
+      "description": "Create system for dynamic credit limits based on account history as specified in Phase 3.",
+      "details": "1. Enhance CreditAccount entity with credit history tracking\n2. Create CreditLimitService\n3. Implement credit score calculation algorithm\n4. Add automatic limit adjustment rules\n5. Create limit change approval workflow\n6. Implement limit change notification\n7. Add credit history reporting\n8. Create credit limit management UI",
+      "testStrategy": "Unit tests for credit limit calculation with various scenarios. Test automatic adjustments with different account histories. Test approval workflow. Integration tests for credit limit management flow.",
+      "priority": "low",
+      "dependencies": [
+        10
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 19,
+      "title": "Implement Additional Account Types",
+      "description": "Add support for checking and investment account types as specified in Phase 3.",
+      "details": "1. Create CheckingAccount entity extending Account\n2. Create InvestmentAccount entity extending Account\n3. Implement specific business logic for each account type\n4. Add account-specific properties and methods\n5. Update repository and service layers\n6. Create UI components for new account types\n7. Implement account-specific transaction rules\n8. Add account conversion functionality",
+      "testStrategy": "Unit tests for new account types. Test account-specific business logic and transaction rules. Test with various scenarios. Integration tests for account creation and management.",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        8,
+        10
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 20,
+      "title": "Implement Account Transfers",
+      "description": "Create functionality for transfers between different accounts as specified in Phase 4.",
+      "details": "1. Create TransferService\n2. Implement transfer transaction logic\n3. Add validation for transfer eligibility\n4. Create transfer fee calculation\n5. Implement transfer limits\n6. Add transfer history tracking\n7. Create transfer UI components\n8. Implement scheduled transfers",
+      "testStrategy": "Unit tests for transfer logic with various scenarios. Test validation rules and limits. Test with different account types and currencies. Integration tests for transfer flow and transaction recording.",
+      "priority": "high",
+      "dependencies": [
+        6,
+        10
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 21,
+      "title": "Implement Transaction Categorization",
+      "description": "Create system for categorizing transactions as specified in Phase 4.",
+      "details": "1. Create TransactionCategory entity\n2. Enhance Transaction entity with category relationship\n3. Implement category management service\n4. Create automatic categorization rules\n5. Add manual category assignment\n6. Implement category-based reporting\n7. Create category management UI\n8. Add category-based budgeting features",
+      "testStrategy": "Unit tests for categorization logic. Test automatic and manual categorization. Test category-based reporting. Integration tests for category management flow.",
+      "priority": "medium",
+      "dependencies": [
+        6,
+        10
+      ],
+      "status": "done",
+      "subtasks": []
+    },
+    {
+      "id": 22,
+      "title": "Implement Advanced Transaction Search",
+      "description": "Develop advanced transaction search and filtering functionality as specified in Phase 4.",
+      "details": "1. Create TransactionSearchService\n2. Implement search criteria model\n3. Add advanced query building\n4. Create search result pagination\n5. Implement sorting options\n6. Add search history tracking\n7. Create advanced search UI\n8. Implement search result export",
+      "testStrategy": "Unit tests for search logic with various criteria. Test query building and result filtering. Test pagination and sorting. Integration tests for search flow and result display.",
+      "priority": "medium",
+      "dependencies": [
+        6,
+        10,
+        21
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 23,
+      "title": "Implement Dashboard View",
+      "description": "Create dashboard with account summaries and recent transactions as specified in Phase 5.",
+      "details": "1. Create DashboardController\n2. Implement dashboard UI with JavaFX\n3. Add account summary widgets\n4. Create recent transaction list\n5. Implement quick action buttons\n6. Add alert notifications\n7. Create dashboard customization\n8. Implement dashboard refresh logic",
+      "testStrategy": "Unit tests for dashboard data collection. Test with various account configurations. Test refresh logic and data updates. Integration tests for dashboard display and interaction.",
+      "priority": "medium",
+      "dependencies": [
+        5,
+        6,
+        10
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 24,
+      "title": "Implement Charts and Graphs",
+      "description": "Create visualization components for transaction history as specified in Phase 5.",
+      "details": "1. Add JavaFX chart libraries to build.gradle\n2. Create ChartService for data preparation\n3. Implement various chart types:\n   - Balance history line chart\n   - Transaction category pie chart\n   - Income/expense bar chart\n   - Monthly comparison chart\n4. Add chart customization options\n5. Create chart export functionality\n6. Implement chart refresh logic\n7. Add interactive chart features",
+      "testStrategy": "Unit tests for chart data preparation. Test with various data sets and time periods. Test chart customization and export. Integration tests for chart display and interaction.",
+      "priority": "low",
+      "dependencies": [
+        6,
+        10,
+        23
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Integrate Chart Libraries and Create Data Preparation Service",
+          "description": "Set up chart libraries (Chart.js, D3.js) and implement a data preparation service to transform financial data for visualization",
+          "dependencies": [],
+          "details": "1. Research and select appropriate chart libraries based on visualization needs\n2. Install and configure selected libraries in the project\n3. Create a data preparation service with methods for:\n   - Time-based data aggregation (daily, weekly, monthly, yearly)\n   - Category-based data grouping\n   - Data normalization and formatting\n4. Implement data caching mechanisms for performance optimization\n5. Test with various data volumes (small, medium, large datasets)\n6. Create mock data generators for testing edge cases (sparse data, outliers)",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Implement Balance and Transaction History Visualizations",
+          "description": "Develop line and area charts for balance trends and transaction history visualization with time-based filtering",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Create line chart component for balance history with:\n   - Configurable time ranges (7d, 30d, 90d, 1y, all)\n   - Hover tooltips showing exact values\n   - Moving average overlay option\n2. Implement area chart for income vs. expenses over time\n3. Add transaction volume bar chart with:\n   - Transaction count visualization\n   - Amount-based visualization\n4. Test with various data patterns:\n   - Steady growth/decline\n   - Seasonal patterns\n   - Sudden spikes/drops\n   - Missing data handling",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Create Category and Comparison Chart Components",
+          "description": "Develop pie, donut, and bar charts for category analysis and period-over-period comparison visualizations",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Implement pie/donut chart for expense categories with:\n   - Interactive segment selection\n   - Percentage and absolute value display\n   - Subcategory drill-down capability\n2. Create stacked bar chart for category comparison across time periods\n3. Develop horizontal bar chart for budget vs. actual spending\n4. Add period comparison charts with:\n   - Month-over-month comparison\n   - Year-over-year comparison\n   - Custom period comparison\n5. Test with various category distributions:\n   - Even distribution\n   - Dominant categories\n   - Many small categories",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Develop Chart Customization and Export Functionality",
+          "description": "Implement user customization options for charts and add functionality to export visualizations in various formats",
+          "dependencies": [
+            2,
+            3
+          ],
+          "details": "1. Create chart theme customization with:\n   - Color scheme selection\n   - Font size and style options\n   - Grid and axis customization\n2. Implement interactive features:\n   - Zoom and pan functionality\n   - Data point selection and highlighting\n   - Animation controls\n3. Add export functionality for:\n   - PNG/JPEG image export\n   - PDF export with multiple charts\n   - CSV data export\n4. Implement responsive design for charts across device sizes\n5. Test customization with accessibility considerations\n6. Create end-to-end tests for export functionality with various chart configurations",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "title": "Implement Dark Mode and Accessibility Features",
+      "description": "Add dark mode theme option and accessibility features as specified in Phase 5.",
+      "details": "1. Create theme switching service\n2. Implement light and dark CSS themes\n3. Add user theme preference storage\n4. Create high contrast theme option\n5. Implement keyboard navigation\n6. Add screen reader support\n7. Create font size adjustment\n8. Implement color blindness accommodations",
+      "testStrategy": "Manual testing of theme switching and appearance. Test accessibility with screen readers. Test keyboard navigation. Conduct user testing with individuals with various accessibility needs.",
+      "priority": "low",
+      "dependencies": [
+        4
+      ],
+      "status": "pending",
+      "subtasks": []
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# Task ID: 4
+# Title: Create Basic UI Components
+# Status: done
+# Dependencies: 1
+# Priority: medium
+# Description: Develop the initial JavaFX UI components for the banking application including main window, navigation, and basic screens.
+# Details:
+1. Create main application window in SmartBankApp.java
+2. Design and implement FXML layouts for:
+   - Main application frame with navigation
+   - Account listing view
+   - Account details view
+   - Transaction form
+   - Transaction history view
+3. Create corresponding CSS files for styling
+4. Implement basic navigation between screens
+5. Ensure responsive design for window resizing
+6. Set up resource loading for FXML files
+
+# Test Strategy:
+Manual UI testing to verify layouts render correctly. Test window resizing behavior. Verify navigation between screens works as expected. Create simple UI tests using TestFX to validate basic UI functionality.

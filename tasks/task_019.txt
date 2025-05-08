@@ -1,0 +1,18 @@
+# Task ID: 19
+# Title: Implement Additional Account Types
+# Status: pending
+# Dependencies: 2, 8, 10
+# Priority: medium
+# Description: Add support for checking and investment account types as specified in Phase 3.
+# Details:
+1. Create CheckingAccount entity extending Account
+2. Create InvestmentAccount entity extending Account
+3. Implement specific business logic for each account type
+4. Add account-specific properties and methods
+5. Update repository and service layers
+6. Create UI components for new account types
+7. Implement account-specific transaction rules
+8. Add account conversion functionality
+
+# Test Strategy:
+Unit tests for new account types. Test account-specific business logic and transaction rules. Test with various scenarios. Integration tests for account creation and management.

@@ -1,0 +1,18 @@
+# Task ID: 15
+# Title: Implement Interest Calculation for Savings Accounts
+# Status: done
+# Dependencies: 10
+# Priority: medium
+# Description: Create automated interest calculation system for savings accounts as specified in Phase 3.
+# Details:
+1. Enhance SavingsAccount entity with interest calculation properties
+2. Create InterestCalculationService
+3. Implement daily interest accrual
+4. Add monthly interest posting
+5. Create interest transaction recording
+6. Implement interest rate management
+7. Add interest calculation history
+8. Create interest calculation scheduler
+
+# Test Strategy:
+Unit tests for interest calculation logic with various scenarios. Test daily accrual and monthly posting. Test with different interest rates and balance amounts. Integration tests for interest calculation and transaction recording.

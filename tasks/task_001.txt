@@ -1,0 +1,22 @@
+# Task ID: 1
+# Title: Project Setup and Structure
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project with the required directory structure, Gradle configuration, and JavaFX setup according to the PRD specifications.
+# Details:
+1. Create a new Gradle project with Java 11 compatibility
+2. Configure build.gradle with JavaFX 21.0.2 dependency
+3. Set up the directory structure as specified in the PRD:
+   - src/com.smartbank/
+   - src/com.smartbank/model/
+   - src/com.smartbank/controller/
+   - src/com.smartbank/view/
+   - src/com.smartbank/util/
+4. Create SmartBankApp.java as the main application class
+5. Configure Gradle wrapper for cross-platform compatibility
+6. Set up basic logging configuration with Java's built-in logging
+7. Create initial README.md with project overview and build instructions
+
+# Test Strategy:
+Verify project structure matches PRD requirements. Test Gradle build and run commands to ensure the application compiles and launches successfully. Validate Java and JavaFX version compatibility.

@@ -1,0 +1,19 @@
+# Task ID: 5
+# Title: Implement Account Management Controllers
+# Status: done
+# Dependencies: 2, 3, 4
+# Priority: high
+# Description: Create controller classes to handle account management operations including creating accounts, viewing details, and processing transactions.
+# Details:
+1. Create AccountController class to handle:
+   - Creating new accounts (savings, credit)
+   - Displaying account details
+   - Updating account information
+2. Implement form validation for account creation
+3. Connect controller methods to UI components
+4. Implement error handling and user feedback
+5. Create utility methods for formatting account data for display
+6. Ensure proper MVC separation of concerns
+
+# Test Strategy:
+Unit tests for controller logic with mocked UI components. Test form validation with valid and invalid inputs. Test error handling scenarios. Integration tests for controller-model interaction.

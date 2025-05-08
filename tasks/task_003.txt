@@ -1,0 +1,25 @@
+# Task ID: 3
+# Title: Implement In-Memory Data Storage
+# Status: done
+# Dependencies: 2
+# Priority: high
+# Description: Create utility classes to manage in-memory storage of accounts and transactions using ArrayLists as specified in the PRD.
+# Details:
+1. Create DataStore class with static ArrayLists for accounts and transactions
+2. Implement methods for:
+   - Adding/retrieving/updating accounts
+   - Recording transactions
+   - Searching accounts by number or owner
+   - Filtering transactions by account
+3. Implement Transaction class with:
+   - transactionId
+   - accountNumber
+   - amount
+   - type (DEPOSIT, WITHDRAWAL)
+   - timestamp
+   - description
+4. Add data validation and appropriate exception handling
+5. Implement singleton pattern for DataStore to ensure single instance
+
+# Test Strategy:
+Unit tests for DataStore operations: adding accounts, retrieving accounts by different criteria, recording transactions, and retrieving transaction history. Test concurrent access scenarios and edge cases like empty lists or non-existent accounts.
