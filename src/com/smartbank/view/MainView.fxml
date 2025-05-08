@@ -7,6 +7,9 @@
         <VBox>
             <!-- Main Menu -->
             <MenuBar>
+                <Menu text="Dashboard">
+                    <MenuItem text="Dashboard Home" onAction="#showDashboard"/>
+                </Menu>
                 <Menu text="Accounts">
                     <MenuItem text="List Accounts" onAction="#showAccountList"/>
                     <MenuItem text="New Account" onAction="#showAccountForm"/>
@@ -14,10 +17,16 @@
                 <Menu text="Transactions">
                     <MenuItem text="Transaction Form" onAction="#showTransactionForm"/>
                     <MenuItem text="History" onAction="#showTransactionHistory"/>
+                    <MenuItem text="Advanced Search" onAction="#showTransactionSearch"/>
                     <MenuItem text="Transfer Funds" onAction="#showTransferForm"/>
                     <SeparatorMenuItem />
                     <MenuItem text="Manage Categories" onAction="#showCategoryManagement"/>
                     <MenuItem text="Budget Management" onAction="#showBudgetManagement"/>
+                    <SeparatorMenuItem />
+                    <MenuItem text="Account Statements" onAction="#showStatementGeneration"/>
+                    <MenuItem text="Credit Limit Management" onAction="#showCreditLimitManagement"/>
+                    <SeparatorMenuItem />
+                    <MenuItem text="Charts &amp; Visualizations" onAction="#showChartView"/>
                 </Menu>
                 <Menu text="Admin" fx:id="menuAdmin">
                     <MenuItem text="User Management" onAction="#showUserManagement"/>
@@ -26,6 +35,8 @@
                 <Menu text="User">
                     <MenuItem text="My Profile" onAction="#showUserProfile"/>
                     <MenuItem text="Change Password" onAction="#showChangePassword"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Accessibility &amp; Theme Settings" onAction="#showAccessibilitySettings"/>
                     <SeparatorMenuItem/>
                     <MenuItem text="Logout" fx:id="menuLogout" onAction="#logout"/>
                 </Menu>

@@ -71,3 +71,161 @@
     -fx-background-color: #f44336;
     -fx-text-fill: white;
 }
+
+/* Dashboard styles */
+.page-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.balance-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.account-card {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 5px;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 5px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.account-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.account-balance {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2196F3;
+}
+
+.titled-pane {
+    -fx-text-fill: #495057;
+}
+
+.titled-pane > .title {
+    -fx-background-color: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    -fx-font-weight: bold;
+}
+
+/* Chart styles */
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #495057;
+}
+
+.chart-plot-background {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #e9ecef;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e9ecef;
+}
+
+.chart-alternative-row-fill {
+    -fx-fill: #f8f9fa;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+/* Line chart specific styles */
+.balance-history-chart .chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-stroke: #2196F3;
+}
+
+.balance-history-chart .chart-line-symbol {
+    -fx-background-color: #2196F3, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Bar chart specific styles */
+.income-expense-chart .chart-bar {
+    -fx-bar-fill: #2196F3;
+}
+
+.income-expense-chart .default-color1.chart-bar {
+    -fx-bar-fill: #f44336;
+}
+
+.monthly-comparison-chart .chart-bar {
+    -fx-bar-fill: #4CAF50;
+}
+
+.monthly-comparison-chart .negative.chart-bar {
+    -fx-bar-fill: #f44336;
+}
+
+/* Pie chart specific styles */
+.chart-pie {
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+.chart-pie-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: #8395a7;
+    -fx-fill: #8395a7;
+}
+
+.category-chart .default-color0.chart-pie { -fx-pie-color: #3498db; }
+.category-chart .default-color1.chart-pie { -fx-pie-color: #2ecc71; }
+.category-chart .default-color2.chart-pie { -fx-pie-color: #f1c40f; }
+.category-chart .default-color3.chart-pie { -fx-pie-color: #e74c3c; }
+.category-chart .default-color4.chart-pie { -fx-pie-color: #9b59b6; }
+.category-chart .default-color5.chart-pie { -fx-pie-color: #1abc9c; }
+.category-chart .default-color6.chart-pie { -fx-pie-color: #e67e22; }
+.category-chart .default-color7.chart-pie { -fx-pie-color: #34495e; }
+
+/* Chart container */
+.chart-container {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+/* Action buttons */
+.action-button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+}
+
+.action-button:hover {
+    -fx-background-color: #0d8aee;
+}
+
+/* Status label */
+.status-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+}
