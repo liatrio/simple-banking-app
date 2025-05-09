@@ -2,6 +2,7 @@ package com.smartbank.scripts;
 
 import com.smartbank.model.*;
 import com.smartbank.repository.*;
+import com.smartbank.service.ServiceFactory;
 import com.smartbank.service.category.*;
 import com.smartbank.service.transfer.*;
 import com.smartbank.util.JPAUtil;
@@ -111,13 +112,18 @@ public class DataGenerator {
     private static void createTransactionCategories() {
         System.out.println("Creating transaction categories...");
         
-        for (int i = 0; i < CATEGORY_NAMES.length; i++) {
-            TransactionCategory category = new TransactionCategory(CATEGORY_NAMES[i], "Category for " + CATEGORY_NAMES[i].toLowerCase() + " transactions");
-            category.setColor(CATEGORY_COLORS[i]);
-            category.setSystem(true);
+        // Use the CategoryService to initialize default categories with proper keywords
+        try {
+            CategoryService categoryService = ServiceFactory.getCategoryService();
+            List<TransactionCategory> categories = categoryService.initializeDefaultCategories();
+            System.out.println("Created " + categories.size() + " categories with proper keywords");
             
-            categoryRepository.save(category);
-            System.out.println("Created category: " + CATEGORY_NAMES[i]);
+            // Get the categories again from the repository to ensure they're loaded into memory
+            List<TransactionCategory> allCategories = categoryRepository.findAll();
+            System.out.println("Loaded " + allCategories.size() + " categories for auto-categorization");
+        } catch (Exception e) {
+            System.err.println("Error initializing categories: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
