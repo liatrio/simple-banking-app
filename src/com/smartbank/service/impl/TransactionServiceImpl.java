@@ -42,6 +42,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
     
     @Override
+    public Transaction updateTransaction(Transaction transaction) {
+        transaction = transactionRepository.save(transaction);
+        LOGGER.info("Updated transaction #" + transaction.getTransactionId());
+        return transaction;
+    }
+    
+    @Override
     public Optional<Transaction> getTransactionById(long transactionId) {
         return transactionRepository.findById(transactionId);
     }

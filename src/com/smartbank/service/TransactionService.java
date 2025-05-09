@@ -22,6 +22,13 @@ public interface TransactionService {
     Transaction createTransaction(long accountNumber, double amount, Transaction.Type type, String description);
     
     /**
+     * Update an existing transaction
+     * @param transaction The transaction to update
+     * @return The updated transaction
+     */
+    Transaction updateTransaction(Transaction transaction);
+    
+    /**
      * Get a transaction by its ID.
      * @param transactionId The transaction ID
      * @return An Optional containing the transaction if found, or empty if not found
