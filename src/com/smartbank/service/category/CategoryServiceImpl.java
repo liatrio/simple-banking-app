@@ -189,6 +189,20 @@ public class CategoryServiceImpl implements CategoryService {
                 "Health", "Personal", "Debt", "Savings", "Giving", "Misc"
             };
             
+            // Define colors for top-level categories
+            Map<String, String> categoryColors = new HashMap<>();
+            categoryColors.put("Income", "#4CAF50");     // Green
+            categoryColors.put("Housing", "#2196F3");    // Blue
+            categoryColors.put("Transportation", "#3F51B5"); // Indigo
+            categoryColors.put("Food", "#00BCD4");      // Cyan
+            categoryColors.put("Entertainment", "#009688"); // Teal
+            categoryColors.put("Health", "#FF9800");    // Orange
+            categoryColors.put("Personal", "#FF5722");   // Deep Orange
+            categoryColors.put("Debt", "#F44336");      // Red
+            categoryColors.put("Savings", "#CDDC39");   // Lime
+            categoryColors.put("Giving", "#8BC34A");    // Light Green
+            categoryColors.put("Misc", "#9C27B0");      // Purple
+            
             // Create uncategorized category
             TransactionCategory uncategorized = new TransactionCategory("Uncategorized", "Transactions not yet categorized");
             uncategorized.setSystem(true);
@@ -202,6 +216,7 @@ public class CategoryServiceImpl implements CategoryService {
                 TransactionCategory category = new TransactionCategory(name, name + " related expenses");
                 category.setSystem(true);
                 category.setKeywords(name.toLowerCase());
+                category.setColor(categoryColors.get(name)); // Set the color from our map
                 em.persist(category);
                 topLevelCategories.put(name, category);
                 createdCategories.add(category);
