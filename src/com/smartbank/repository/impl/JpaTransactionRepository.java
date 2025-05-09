@@ -7,7 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * JPA implementation of the TransactionRepository interface.
@@ -39,14 +42,20 @@ public class JpaTransactionRepository extends JpaRepository<Transaction, Long> i
 
     @Override
     public List<Transaction> findByDateRange(Date startDate, Date endDate) {
-        return executeInTransaction(em -> {
-            TypedQuery<Transaction> query = em.createQuery(
-                    "SELECT t FROM Transaction t WHERE t.timestamp BETWEEN :startDate AND :endDate ORDER BY t.timestamp DESC",
-                    Transaction.class);
-            query.setParameter("startDate", startDate);
-            query.setParameter("endDate", endDate);
-            return query.getResultList();
-        });
+        try {
+            // Get all transactions, then filter by date in Java code
+            // This avoids potential date format issues in SQLite
+            List<Transaction> allTransactions = findAll();
+            
+            // Filter by date in Java code
+            return allTransactions.stream()
+                .filter(tx -> isDateInRange(tx.getTimestamp(), startDate, endDate))
+                .sorted((t1, t2) -> t2.getTimestamp().compareTo(t1.getTimestamp())) // DESC order
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error finding transactions by date range: " + e.getMessage(), e);
+            return Collections.emptyList();
+        }
     }
 
     @Override
@@ -63,15 +72,28 @@ public class JpaTransactionRepository extends JpaRepository<Transaction, Long> i
 
     @Override
     public List<Transaction> findByAccountNumberAndDateRange(long accountNumber, Date startDate, Date endDate) {
-        return executeInTransaction(em -> {
-            TypedQuery<Transaction> query = em.createQuery(
-                    "SELECT t FROM Transaction t WHERE t.accountNumber = :accountNumber AND t.timestamp BETWEEN :startDate AND :endDate ORDER BY t.timestamp DESC",
-                    Transaction.class);
-            query.setParameter("accountNumber", accountNumber);
-            query.setParameter("startDate", startDate);
-            query.setParameter("endDate", endDate);
-            return query.getResultList();
-        });
+        try {
+            // Get all transactions for the account, then filter by date in Java code
+            // This avoids potential date format issues in SQLite
+            List<Transaction> allAccountTransactions = findByAccountNumber(accountNumber);
+            
+            // Filter by date in Java code
+            return allAccountTransactions.stream()
+                .filter(tx -> isDateInRange(tx.getTimestamp(), startDate, endDate))
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error finding transactions by account and date range: " + e.getMessage(), e);
+            return Collections.emptyList();
+        }
+    }
+    
+    // Helper method to check if a date is within a range
+    private boolean isDateInRange(Date date, Date startDate, Date endDate) {
+        if (date == null || startDate == null || endDate == null) {
+            return false;
+        }
+        return (date.equals(startDate) || date.after(startDate)) && 
+              (date.equals(endDate) || date.before(endDate));
     }
     
     @Override

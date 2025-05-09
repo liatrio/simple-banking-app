@@ -41,14 +41,19 @@ public class CategoryReportServiceImpl implements CategoryReportService {
         // Get transactions for the account within the date range
         List<Transaction> transactions = getTransactionsInDateRange(accountNumber, startDate, endDate);
         
-        // Filter for spending (negative amounts)
-        List<Transaction> spendingTransactions = transactions.stream()
-                .filter(t -> t.getSignedAmount() < 0 && t.getCategory() != null)
+        // Filter for transactions that have categories assigned, including both spending and income
+        List<Transaction> categorizedTransactions = transactions.stream()
+                .filter(t -> t.getCategory() != null)
+                .collect(Collectors.toList());
+        
+        // For spending reports, we'll include all transactions but still treat spending (negative) and income separately
+        List<Transaction> spendingTransactions = categorizedTransactions.stream()
+                .filter(t -> t.getSignedAmount() < 0)
                 .collect(Collectors.toList());
         
         // Log for debugging
         Logger.getLogger(CategoryReportServiceImpl.class.getName()).info(
-                "Found " + spendingTransactions.size() + " spending transactions for account " + 
+                "Found " + spendingTransactions.size() + " spending transactions with categories for account " + 
                 accountNumber + " from " + startDate + " to " + endDate);
         
         return calculateCategorySpending(spendingTransactions, false);
@@ -237,18 +242,13 @@ public class CategoryReportServiceImpl implements CategoryReportService {
      * Helper method to get transactions in a date range.
      */
     private List<Transaction> getTransactionsInDateRange(long accountNumber, Date startDate, Date endDate) {
-        List<Transaction> allTransactions = transactionRepository.findByAccountNumber(accountNumber);
+        // Use the repository method which now does in-memory filtering to avoid date issues
+        List<Transaction> filteredTransactions = transactionRepository.findByAccountNumberAndDateRange(
+                accountNumber, startDate, endDate);
         
         Logger.getLogger(CategoryReportServiceImpl.class.getName()).info(
-                "Found " + allTransactions.size() + " total transactions for account " + accountNumber);
-        
-        List<Transaction> filteredTransactions = allTransactions.stream()
-                .filter(t -> (t.getTimestamp().equals(startDate) || t.getTimestamp().after(startDate)) &&
-                            (t.getTimestamp().equals(endDate) || t.getTimestamp().before(endDate)))
-                .collect(Collectors.toList());
-        
-        Logger.getLogger(CategoryReportServiceImpl.class.getName()).info(
-                "After date filtering, found " + filteredTransactions.size() + " transactions between " + 
+                "Using repository date filtering, found " + filteredTransactions.size() + 
+                " transactions for account " + accountNumber + " between " + 
                 startDate + " and " + endDate);
                 
         return filteredTransactions;
