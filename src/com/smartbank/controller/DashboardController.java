@@ -335,6 +335,52 @@ public class DashboardController extends BaseController {
         // If no data, add a placeholder with appropriate message
         if (pieChartData.isEmpty()) {
             if (hasTransactionData) {
+                // Log for debugging purposes
+                System.out.println("Has transaction data but no categorized spending to display");
+                
+                // Check if we can auto-categorize the transactions for each account
+                boolean hasCategories = false;
+
+                for (Account account : userAccounts) {
+                    long accountNum = account.getAccountNumber();
+                    if (transactionService.getTransactionsByAccount(accountNum) != null && 
+                        !transactionService.getTransactionsByAccount(accountNum).isEmpty()) {
+                        try {
+                            // Attempt to get the categorization service and categorize all transactions
+                            ServiceFactory.getTransactionCategorizationService().categorizeAll();
+                            
+                            // Try to reload spending data after categorization
+                            Map<String, Double> newCategorySpending = new HashMap<>();
+                            Map<Long, CategoryReportService.CategorySpending> updatedSpending = 
+                                reportService.getSpendingByCategory(accountNum, startDate, endDate);
+                            
+                            if (updatedSpending != null && !updatedSpending.isEmpty()) {
+                                // Process the new categories
+                                for (Map.Entry<Long, CategoryReportService.CategorySpending> entry : updatedSpending.entrySet()) {
+                                    String categoryName = entry.getValue().getCategoryName();
+                                    double amount = Math.abs(entry.getValue().getAmount());
+                                    
+                                    if (amount > 0) {
+                                        pieChartData.add(new PieChart.Data(categoryName, amount));
+                                        hasCategories = true;
+                                    }
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Error auto-categorizing transactions: " + e.getMessage());
+                        }
+                    }
+                }
+                
+                // After trying all accounts, if we found categories, update the chart
+                if (hasCategories) {
+                    // Update chart with the data we collected
+                    spendingByCategoryChart.setData(pieChartData);
+                    spendingByCategoryChart.setTitle("Spending by Category");
+                    return;
+                }
+                
+                // If we still have no categories, show the "No categorized spending" message
                 pieChartData.add(new PieChart.Data("No categorized spending", 1));
                 spendingByCategoryChart.setTitle("No categorized spending in the last month");
             } else {
