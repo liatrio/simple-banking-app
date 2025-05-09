@@ -30,22 +30,14 @@ sourceSets {
             srcDirs = ['src']
         }
         resources {
-            srcDirs = ['src', 'src/main/resources']
+            srcDirs = ['src/main/resources']
         }
     }
 }
 
-// Copy persistence.xml to ensure it's in the classpath
-task copyPersistenceXml(type: Copy) {
-    from 'src/META-INF/persistence.xml'
-    into 'src/main/resources/META-INF'
-}
-
-// Make sure the persistence.xml is copied before compiling
-processResources.dependsOn copyPersistenceXml
-
+// Configure Gradle to handle duplicate resources if encountered
 tasks.withType(Copy).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 dependencies {
