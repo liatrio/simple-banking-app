@@ -101,6 +101,21 @@ java -jar build/libs/simple-banking-app.jar
 - The main class is `com.smartbank.SmartBankApp`
 - JPA is used for database persistence
 
+## Task-Driven Development
+This project uses a task-driven development workflow powered by [task-master](https://www.task-master.dev/) mcp. Tasks are defined in structured JSON format and individual task files in the `tasks/` directory.
+
+### Task Structure
+- Tasks are stored in `tasks/tasks.json` and individual files in the `tasks/` directory
+- Each task has an ID, title, status, dependencies, priority, description, and implementation details
+- Tasks follow a dependency chain to ensure proper development sequence
+
+###  Windsurf Workflows
+The [task-master mcp](https://github.com/eyaltoledano/claude-task-master?tab=readme-ov-file#quick-start) is required to execute the following workflows:
+/next-task - Selects the next task to work on
+/continue-active-task - Continues working on the currently active task or any subtasks
+/get-all-tasks - Lists all tasks and subtasks
+/validate-task-dependencies - Check tasks for dependency issues like circular references or links to non-existent tasks without making changes.
+
 ## Accessibility Features
 - Screen reader support for visually impaired users
 - Keyboard navigation for motor impaired users
@@ -152,4 +167,3 @@ The test data generator can be customized by modifying `scripts/generate-testdat
 - Number of transactions
 - Balance and credit limit ranges
 - Transaction categories and descriptions
-

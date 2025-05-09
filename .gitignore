@@ -72,10 +72,8 @@ node_modules/
 
 # Database files
 *.db
-*.db-journal
 *.sqlite
 *.sqlite3
-*.sqlite-journal
 *.sql
 *.backup
 *.bak
@@ -103,10 +101,18 @@ backups/
 .roo/
 .roomodes
 
-# Test files
-**/Test.java
-**/InheritanceTest.java
-**/test/temp/
+# Test files - only exclude specific Test.java files in src, not in test directory
+/src/**/Test.java
+/src/**/InheritanceTest.java
+
+# Test reports and coverage
+/build/reports/
+/build/jacoco/
+/build/test-results/
+
+# Test databases
+*.db-journal
+test-*.db
 
 # Persistence/JPA specific
 src/META-INF/
@@ -117,4 +123,3 @@ src/META-INF/
 .env.*
 
 **/.claude/settings.local.json
-

@@ -2,6 +2,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'java'
+    id 'jacoco'  // JaCoCo plugin for code coverage
 }
 
 repositories {
@@ -31,6 +32,14 @@ sourceSets {
         }
         resources {
             srcDirs = ['src', 'src/main/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+        resources {
+            srcDirs = ['test/resources']
         }
     }
 }
@@ -74,7 +83,105 @@ dependencies {
     
     // FXSVGChart for SVG export
     implementation 'org.gillius:jfxutils:1.0'
+    
+    // Testing dependencies
+    // JUnit 5 (Jupiter)
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2' // For parameterized tests
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    
+    // Mockito for mocking
+    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1' // Mockito integration with JUnit 5
+    
+    // For testing JavaFX components
+    testImplementation 'org.testfx:testfx-core:4.0.16-alpha'
+    testImplementation 'org.testfx:testfx-junit5:4.0.16-alpha'
+    
+    // AssertJ for fluent assertions
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    
+    // H2 in-memory database for testing
+    testImplementation 'com.h2database:h2:2.1.214'
 }
 
 sourceCompatibility = 11
 targetCompatibility = 11
+
+// Configure test task
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+    reports {
+        html.required = true
+        junitXml.required = true
+    }
+}
+
+// Configure JaCoCo for code coverage
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/view/**',  // Exclude JavaFX view classes from coverage
+                '**/SmartBankApp.java',  // Exclude main application class
+                '**/Test.java',
+                '**/InheritanceTest.java'
+            ])
+        }))
+    }
+}
+
+// Configure JaCoCo verification with quality gates
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    
+    // Only include specific classes that we've tested
+    def includedClasses = [
+        // Model classes that have tests
+        'com.smartbank.model.User',
+        'com.smartbank.model.Transaction',
+        'com.smartbank.model.TransactionCategory',
+        'com.smartbank.model.CheckingAccount',
+        'com.smartbank.model.ThemePreference',
+        // Utility classes that have tests
+        'com.smartbank.util.ValidationUtils',
+        'com.smartbank.util.JPAUtil'
+        // Controller classes will be added later when we have better coverage
+    ]
+    
+    violationRules {
+        rule {
+            element = 'CLASS'
+            includes = includedClasses
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.70  // 70% line coverage required
+            }
+        }
+        
+        rule {
+            element = 'CLASS'
+            includes = includedClasses
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.50  // 50% branch coverage required
+            }
+        }
+    }
+}
+
+// Make sure jacoco test report and verification are run when check task is run
+check.dependsOn jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification

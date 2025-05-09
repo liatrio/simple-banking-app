@@ -1,6 +1,6 @@
 # Task ID: 25
 # Title: Implement Dark Mode and Accessibility Features
-# Status: pending
+# Status: done
 # Dependencies: 4
 # Priority: low
 # Description: Add dark mode theme option and accessibility features as specified in Phase 5.
