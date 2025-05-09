@@ -1,5 +1,5 @@
 ---
-description: Get the next task-master task to work on
+description: 
 ---
 
 Find the next task to work on based on dependencies and status.
