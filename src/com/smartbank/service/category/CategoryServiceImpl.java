@@ -193,6 +193,7 @@ public class CategoryServiceImpl implements CategoryService {
             TransactionCategory uncategorized = new TransactionCategory("Uncategorized", "Transactions not yet categorized");
             uncategorized.setSystem(true);
             uncategorized.setColor("#808080"); // Gray
+            uncategorized.setKeywords("uncategorized,misc,unknown");
             em.persist(uncategorized);
             createdCategories.add(uncategorized);
             
@@ -200,51 +201,52 @@ public class CategoryServiceImpl implements CategoryService {
             for (String name : rootCategoryNames) {
                 TransactionCategory category = new TransactionCategory(name, name + " related expenses");
                 category.setSystem(true);
+                category.setKeywords(name.toLowerCase());
                 em.persist(category);
                 topLevelCategories.put(name, category);
                 createdCategories.add(category);
             }
             
-            // Add some common subcategories
-            addSubcategory(em, topLevelCategories.get("Income"), "Salary", "#4CAF50", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Income"), "Interest", "#8BC34A", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Income"), "Dividends", "#CDDC39", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Income"), "Gifts", "#FFC107", createdCategories);
+            // Add some common subcategories with appropriate keywords
+            addSubcategory(em, topLevelCategories.get("Income"), "Salary", "#4CAF50", "salary,paycheck,payment,deposit,wage,compensation,payroll", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Income"), "Interest", "#8BC34A", "interest,yield,dividend,investment return", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Income"), "Dividends", "#CDDC39", "dividend,stock dividends,equity", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Income"), "Gifts", "#FFC107", "gift,present,bonus", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Housing"), "Rent/Mortgage", "#FF5722", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Housing"), "Utilities", "#F44336", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Housing"), "Maintenance", "#E91E63", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Housing"), "Rent/Mortgage", "#FF5722", "rent,mortgage,lease,housing payment,apartment,home payment", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Housing"), "Utilities", "#F44336", "utilities,electric,water,gas,power,energy,sewage,waste,garbage", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Housing"), "Maintenance", "#E91E63", "maintenance,repair,home repair,plumber,handyman,contractor", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Transportation"), "Gas", "#9C27B0", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Transportation"), "Car Payment", "#673AB7", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Transportation"), "Public Transit", "#3F51B5", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Transportation"), "Gas", "#9C27B0", "gas,fuel,gasoline,petrol,shell,chevron,exxon,bp,circle k", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Transportation"), "Car Payment", "#673AB7", "car payment,auto loan,vehicle finance,lease payment,toyota,honda,ford,bmw", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Transportation"), "Public Transit", "#3F51B5", "transit,bus,subway,train,metro,transportation,uber,lyft,taxi,cab", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Food"), "Groceries", "#2196F3", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Food"), "Restaurants", "#03A9F4", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Food"), "Coffee", "#00BCD4", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Food"), "Groceries", "#2196F3", "groceries,supermarket,food,grocery,kroger,safeway,publix,walmart,target,whole foods,trader joe", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Food"), "Restaurants", "#03A9F4", "restaurant,dining,eat out,lunch,dinner,food delivery,doordash,grubhub,ubereats,mcdonalds,chipotle,starbucks", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Food"), "Coffee", "#00BCD4", "coffee,cafe,starbucks,peets,dunkin,costa,tim hortons", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Entertainment"), "Movies", "#009688", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Entertainment"), "Concerts", "#4CAF50", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Entertainment"), "Subscriptions", "#8BC34A", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Entertainment"), "Movies", "#009688", "movies,cinema,theatre,theater,netflix,hulu,disney,hbo,amazon prime", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Entertainment"), "Concerts", "#4CAF50", "concert,live music,ticket,festival,live show,eventbrite,ticketmaster", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Entertainment"), "Subscriptions", "#8BC34A", "subscription,membership,streaming,amazon,netflix,hulu,spotify,apple music,youtube", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Health"), "Insurance", "#CDDC39", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Health"), "Doctor", "#FFC107", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Health"), "Pharmacy", "#FF9800", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Health"), "Insurance", "#CDDC39", "insurance,health insurance,medical insurance,premium,coverage", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Health"), "Doctor", "#FFC107", "doctor,physician,medical,clinic,hospital,appointment,healthcare", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Health"), "Pharmacy", "#FF9800", "pharmacy,medication,prescription,medicine,walgreens,cvs,rite aid", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Personal"), "Clothing", "#FF5722", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Personal"), "Education", "#F44336", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Personal"), "Hobbies", "#E91E63", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Personal"), "Clothing", "#FF5722", "clothing,clothes,apparel,shoes,fashion,shopping,mall,nordstrom,macys,tj maxx,ross,amazon", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Personal"), "Education", "#F44336", "education,tuition,student,university,college,course,class,school,training,udemy,coursera", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Personal"), "Hobbies", "#E91E63", "hobby,craft,amazon,book,game,gaming,sport,equipment,hobby lobby,michaels", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Debt"), "Credit Card", "#9C27B0", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Debt"), "Student Loans", "#673AB7", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Debt"), "Personal Loans", "#3F51B5", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Debt"), "Credit Card", "#9C27B0", "credit card,cc payment,visa,mastercard,discover,amex,capital one,chase,citi,bank of america", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Debt"), "Student Loans", "#673AB7", "student loan,education loan,sallie mae,navient,nelnet,great lakes,fedloan", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Debt"), "Personal Loans", "#3F51B5", "loan,personal loan,finance,lending club,sofi,upstart,prosper", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Savings"), "Emergency Fund", "#2196F3", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Savings"), "Retirement", "#03A9F4", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Savings"), "Investment", "#00BCD4", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Savings"), "Emergency Fund", "#2196F3", "emergency,savings,fund,reserve", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Savings"), "Retirement", "#03A9F4", "retirement,401k,ira,pension,invest,fidelity,vanguard,charles schwab", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Savings"), "Investment", "#00BCD4", "investment,stock,bond,mutual fund,etf,roth,vanguard,fidelity,schwab,robinhood", createdCategories);
             
-            addSubcategory(em, topLevelCategories.get("Giving"), "Donations", "#009688", createdCategories);
-            addSubcategory(em, topLevelCategories.get("Giving"), "Gifts", "#4CAF50", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Giving"), "Donations", "#009688", "donation,donate,charity,nonprofit,relief,salvation army,red cross,goodwill", createdCategories);
+            addSubcategory(em, topLevelCategories.get("Giving"), "Gifts", "#4CAF50", "gift,present,charity,birthday,holiday,wedding,christmas,amazon", createdCategories);
             
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -260,10 +262,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
     
     private void addSubcategory(EntityManager em, TransactionCategory parent, String name, String color,
-                               List<TransactionCategory> createdCategories) {
+                               String keywords, List<TransactionCategory> createdCategories) {
         TransactionCategory subcategory = new TransactionCategory(name, name + " related expenses", color, parent);
         subcategory.setSystem(true);
-        subcategory.setKeywords(name.toLowerCase());
+        subcategory.setKeywords(keywords);
         em.persist(subcategory);
         createdCategories.add(subcategory);
     }

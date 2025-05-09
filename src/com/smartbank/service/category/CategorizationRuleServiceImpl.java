@@ -86,10 +86,35 @@ public class CategorizationRuleServiceImpl implements CategorizationRuleService 
         }
         
         String description = transaction.getDescription().toLowerCase();
+        String merchantName = transaction.getMerchantName() != null ? 
+                              transaction.getMerchantName().toLowerCase() : "";
         
         // Load all categories if keyword cache is empty
         if (keywordCache.isEmpty()) {
             loadKeywordCache();
+        }
+        
+        // If we still have no keywords, try to ensure categories are properly initialized
+        if (keywordCache.isEmpty()) {
+            categoryService.initializeDefaultCategories();
+            loadKeywordCache();
+        }
+        
+        // If after initialization we still have no keywords, use a fallback category approach
+        if (keywordCache.isEmpty()) {
+            // Try to assign a default category based on transaction type
+            List<TransactionCategory> allCategories = categoryService.getAllCategories();
+            if (!allCategories.isEmpty()) {
+                // Find a reasonable default category
+                for (TransactionCategory category : allCategories) {
+                    if (category.getName().equalsIgnoreCase("Miscellaneous") || 
+                        category.getName().equalsIgnoreCase("Other")) {
+                        return category;
+                    }
+                }
+                // If no "Miscellaneous" category, just return the first one
+                return allCategories.get(0);
+            }
         }
         
         // Calculate match scores for each category
@@ -101,7 +126,9 @@ public class CategorizationRuleServiceImpl implements CategorizationRuleService 
             List<String> keywords = entry.getValue();
             
             for (String keyword : keywords) {
-                if (description.contains(keyword.toLowerCase())) {
+                // Check both description and merchant name for matches
+                if (description.contains(keyword.toLowerCase()) || 
+                    (!merchantName.isEmpty() && merchantName.contains(keyword.toLowerCase()))) {
                     // Increment score for this category
                     matchScores.put(categoryId, matchScores.getOrDefault(categoryId, 0) + 1);
                 }
