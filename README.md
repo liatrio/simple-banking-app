@@ -123,8 +123,33 @@ java -jar build/libs/simple-banking-app.jar
 - Statement generation in multiple formats
 - Data migration utilities for version upgrades
 
-## Troubleshooting
-- If you encounter JavaFX related errors, ensure your Java installation includes JavaFX or that the JavaFX modules are correctly specified in the build.gradle file
-- For logging output, the application uses Java's built-in logging with a custom format
-- Check the console output for any error messages if the application fails to start
-- For database connectivity issues, verify your database configuration in the application properties
+## Test Data Generation
+The application includes several scripts to generate and manage test data:
+
+### Generating Test Data
+Use the provided script to create a complete set of test data including users, accounts, transactions, and more:
+
+```bash
+# Run from project root directory
+./scripts/generate-data.sh
+```
+
+This script will:
+1. Build the project
+2. Back up any existing database
+3. Generate test data including:
+   - Admin user (username: admin, password: admin123)
+   - Regular users (username: firstnamelastname#, password: password123)
+   - Various account types with realistic balances and history
+   - Transaction records with different categories
+   - Credit history and limit change requests
+
+
+### Customizing Test Data
+The test data generator can be customized by modifying `scripts/generate-testdata.java` and rebuilding the project. Key parameters include:
+- Number of users
+- Number of accounts per user
+- Number of transactions
+- Balance and credit limit ranges
+- Transaction categories and descriptions
+
